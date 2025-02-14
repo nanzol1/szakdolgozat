@@ -200,7 +200,7 @@ watch(checkboxes,(newVal) => {
                     class="mt-1 block w-full"
                     v-model="form.place_address"
                     required
-                    
+                    autofocus
                     autocomplete="place_address"
                     placeholder="Cím"
                 />

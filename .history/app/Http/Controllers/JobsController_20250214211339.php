@@ -186,22 +186,6 @@ class JobsController extends Controller{
         $categories = [];
         $employment_types = Employment_type::all();
         $work_schedules = Work_schedule::all();
-        $applications = Application::with(['user' => function($query){
-            $query->select('id','name','email','phone_number');
-        },
-        'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
-        ->get()->toArray();
-        $cleanedApps = array_map(function($apps) {
-            return [
-                'id' => $apps['id'],
-                'status_name' => $apps['job_status']['name'],
-                'job_id' => $apps['job_id'],
-                'user_id' => $apps['user']['id'],
-                'name' => $apps['user']['name'],
-                'email' => $apps['user']['email'],
-                'phone' => $apps['user']['phone_number'],
-            ];
-        },$applications);
         foreach($category as $item){
             $categories[$item->id] = [
                 'id' => $item->id,
@@ -214,7 +198,6 @@ class JobsController extends Controller{
             'categories' => $categories,
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
-            'applications' => $cleanedApps,
         ]);
     }
 
@@ -263,8 +246,7 @@ class JobsController extends Controller{
         $applications = Application::with(['user' => function($query){
             $query->select('id','name','email','phone_number');
         },
-        'job_status'])->where('job_id','=',$jobId)->where('is_deleted','!=','1')
-        ->where('user_id','=',$applicantId)
+        'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
         ->get()->toArray();
         $cleanedApps = array_map(function($apps) {
             return [
@@ -278,8 +260,8 @@ class JobsController extends Controller{
             ];
         },$applications);
 
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+        return Inertia::render('Profile/CompanyProfile/Jobs/EditJob',[
+            'applications' => $cleanedApps,
         ]);
     }
     

@@ -180,28 +180,31 @@ class JobsController extends Controller{
         ]);
     }
 
-    public function editListedJob(Request $request){
+    public function editListedJob(Request $request,$applicantId = null){
         $job = JobVacancy::find($request->id);
         $category = JobCategory::with('jobs_subcategories')->get();
         $categories = [];
         $employment_types = Employment_type::all();
         $work_schedules = Work_schedule::all();
-        $applications = Application::with(['user' => function($query){
-            $query->select('id','name','email','phone_number');
-        },
-        'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
-        ->get()->toArray();
-        $cleanedApps = array_map(function($apps) {
-            return [
-                'id' => $apps['id'],
-                'status_name' => $apps['job_status']['name'],
-                'job_id' => $apps['job_id'],
-                'user_id' => $apps['user']['id'],
-                'name' => $apps['user']['name'],
-                'email' => $apps['user']['email'],
-                'phone' => $apps['user']['phone_number'],
-            ];
-        },$applications);
+        if($applicantId){
+            $applications = Application::with(['user' => function($query){
+                $query->select('id','name','email','phone_number');
+            },
+            'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
+            ->where('user_id','=','1')
+            ->get()->toArray();
+            $cleanedApps = array_map(function($apps) {
+                return [
+                    'id' => $apps['id'],
+                    'status_name' => $apps['job_status']['name'],
+                    'job_id' => $apps['job_id'],
+                    'user_id' => $apps['user']['id'],
+                    'name' => $apps['user']['name'],
+                    'email' => $apps['user']['email'],
+                    'phone' => $apps['user']['phone_number'],
+                ];
+            },$applications);
+        }
         foreach($category as $item){
             $categories[$item->id] = [
                 'id' => $item->id,
@@ -278,8 +281,8 @@ class JobsController extends Controller{
             ];
         },$applications);
 
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+        return Inertia::render('Profile/CompanyProfile/Jobs/EditJob',[
+            'applications' => $cleanedApps,
         ]);
     }
     

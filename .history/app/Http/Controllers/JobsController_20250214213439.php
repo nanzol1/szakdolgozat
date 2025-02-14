@@ -180,7 +180,7 @@ class JobsController extends Controller{
         ]);
     }
 
-    public function editListedJob(Request $request){
+    public function editListedJob(Request $request,$applicantId = null){
         $job = JobVacancy::find($request->id);
         $category = JobCategory::with('jobs_subcategories')->get();
         $categories = [];
@@ -190,6 +190,7 @@ class JobsController extends Controller{
             $query->select('id','name','email','phone_number');
         },
         'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
+        ->where('user_id','=',auth()->user()->id)
         ->get()->toArray();
         $cleanedApps = array_map(function($apps) {
             return [
@@ -278,8 +279,8 @@ class JobsController extends Controller{
             ];
         },$applications);
 
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+        return Inertia::render('Profile/CompanyProfile/Jobs/EditJob',[
+            'applications' => $cleanedApps,
         ]);
     }
     

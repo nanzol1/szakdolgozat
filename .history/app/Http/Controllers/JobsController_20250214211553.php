@@ -214,7 +214,7 @@ class JobsController extends Controller{
             'categories' => $categories,
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
-            'applications' => $cleanedApps,
+            'application' => $cleanedApps,
         ]);
     }
 
@@ -278,8 +278,8 @@ class JobsController extends Controller{
             ];
         },$applications);
 
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+        return Inertia::render('Profile/CompanyProfile/Jobs/EditJob',[
+            'applications' => $cleanedApps,
         ]);
     }
     

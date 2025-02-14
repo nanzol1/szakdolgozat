@@ -38,11 +38,11 @@ Route::middleware('auth:company')->group(function () {
     Route::delete('/company-profile', [CompanyProfileController::class, 'destroy'])->name('cprofile.destroy');
     Route::post('/company-profile/createjob', [CompanyProfileController::class, 'createJobs'])->name('cprofile.create.job');
     Route::get('company-profile/munkaim',[JobsController::class,'getListedJobs'])->name('cprofile.myjobs');
-    Route::get('company-profile/munka/{id}',[JobsController::class,'editListedJob'])->name('cprofile.myjobs.edit');
+    Route::get('company-profile/munkaim/edit/{id}',[JobsController::class,'editListedJob'])->name('cprofile.myjobs.edit');
     Route::get('/search-employment',[CompanyProfileController::class,'getEmploymentsType'])->name('cprofile.employment.search'); 
     Route::get('/search-schedules',[CompanyProfileController::class,'getWorkSchedules'])->name('cprofile.schedules.search'); 
     Route::post('company_profile/munkaim/edit/save',[JobsController::class,'saveListedJob'])->name('cprofile.save.job'); 
-    Route::get('company-profile/munka/{id}/jelentkezo/{jelentkezoId}',[JobsController::class,'showApplicant'])->name('cprofile.job.applicant');
+    Route::get('munka/{id}/jelentkezo/{jelentkezoId}',[JobsController::class,'showApplicant'])->name('cprofile.job.applicant');
 
 });
 

@@ -279,7 +279,7 @@ class JobsController extends Controller{
         },$applications);
 
         return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+            'applicant' => $cleanedApps,
         ]);
     }
     

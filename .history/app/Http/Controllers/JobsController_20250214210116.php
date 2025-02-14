@@ -192,15 +192,7 @@ class JobsController extends Controller{
         'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
         ->get()->toArray();
         $cleanedApps = array_map(function($apps) {
-            return [
-                'id' => $apps['id'],
-                'status_name' => $apps['job_status']['name'],
-                'job_id' => $apps['job_id'],
-                'user_id' => $apps['user']['id'],
-                'name' => $apps['user']['name'],
-                'email' => $apps['user']['email'],
-                'phone' => $apps['user']['phone_number'],
-            ];
+            return $apps->id;
         },$applications);
         foreach($category as $item){
             $categories[$item->id] = [
@@ -257,30 +249,6 @@ class JobsController extends Controller{
                 }
             }
         }
-    }
-
-    public function showApplicant($jobId, $applicantId){
-        $applications = Application::with(['user' => function($query){
-            $query->select('id','name','email','phone_number');
-        },
-        'job_status'])->where('job_id','=',$jobId)->where('is_deleted','!=','1')
-        ->where('user_id','=',$applicantId)
-        ->get()->toArray();
-        $cleanedApps = array_map(function($apps) {
-            return [
-                'id' => $apps['id'],
-                'status_name' => $apps['job_status']['name'],
-                'job_id' => $apps['job_id'],
-                'user_id' => $apps['user']['id'],
-                'name' => $apps['user']['name'],
-                'email' => $apps['user']['email'],
-                'phone' => $apps['user']['phone_number'],
-            ];
-        },$applications);
-
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
-        ]);
     }
     
 }

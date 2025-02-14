@@ -181,7 +181,7 @@ const showPopUp = async (applicantId) => {
         selectedApplicant.value = response.data.applicant;
         isPopup.value = true;
     } catch (error){
-        console.error('Hiba történt a lekérés közben: ',error);
+        console.error('Hiba történt a lekérés közben: ',error)
     }
 };
 </script>
@@ -383,14 +383,8 @@ const showPopUp = async (applicantId) => {
         <section class="w-full dark:text-white">
             Jelentkező(k)
             <div v-for="apps in applications">
-                {{ apps }}
+                {{ applications }}
                 <button @click="showPopUp(apps.user_id)">Megtekintem</button>
-            </div>
-            <div class="mt-5">
-                Kiválasztva
-                <div>
-                    {{ selectedApplicant }}
-                </div>
             </div>
         </section>
         </div>

@@ -42,7 +42,7 @@ Route::middleware('auth:company')->group(function () {
     Route::get('/search-employment',[CompanyProfileController::class,'getEmploymentsType'])->name('cprofile.employment.search'); 
     Route::get('/search-schedules',[CompanyProfileController::class,'getWorkSchedules'])->name('cprofile.schedules.search'); 
     Route::post('company_profile/munkaim/edit/save',[JobsController::class,'saveListedJob'])->name('cprofile.save.job'); 
-    Route::get('company-profile/munka/{id}/jelentkezo/{jelentkezoId}',[JobsController::class,'showApplicant'])->name('cprofile.job.applicant');
+    Route::get('munka/{id}/jelentkezo/{jelentkezoId}',[JobsController::class,'editListedJob'])->name('cprofile.job.applicant');
 
 });
 

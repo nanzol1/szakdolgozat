@@ -386,12 +386,6 @@ const showPopUp = async (applicantId) => {
                 {{ apps }}
                 <button @click="showPopUp(apps.user_id)">Megtekintem</button>
             </div>
-            <div class="mt-5">
-                Kiválasztva
-                <div>
-                    {{ selectedApplicant }}
-                </div>
-            </div>
         </section>
         </div>
     </AuthenticatedLayout>

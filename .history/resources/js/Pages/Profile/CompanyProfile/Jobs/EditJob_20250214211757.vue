@@ -36,7 +36,6 @@ const employments = ref([]);
 const schedules = ref([]);
 const activeCheckbox = ref(false);
 const isPopup = ref(false);
-const selectedApplicant = ref(null);
 
 const form = useForm({
     id:props.job.id,
@@ -115,7 +114,7 @@ const computeEmployments = computed(() => {
 });
 
 const computeAddress = computed(() => {
-    let address = props.job.address || '';
+    let address = props.job.address;
     if(address){
         if(address.split(',')[0].length > 0){
             form.zip_address = address.split(',')[0];
@@ -175,14 +174,14 @@ onMounted(() => {
         activeCheckbox.value = false;
     }
 });
-const showPopUp = async (applicantId) => {
-    try{
-        const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
-        selectedApplicant.value = response.data.applicant;
-        isPopup.value = true;
-    } catch (error){
-        console.error('Hiba történt a lekérés közben: ',error);
-    }
+const showPopUp = (applicantId) => {
+    router.visit(`munka/${props.job.id}/jelentkezo/${applicantId}`,{
+        preserveState:true,
+        onSuccess:(page) =>{
+            console.log(page);
+            isPopup.value = true;
+        },
+    });
 };
 </script>
 
@@ -383,14 +382,8 @@ const showPopUp = async (applicantId) => {
         <section class="w-full dark:text-white">
             Jelentkező(k)
             <div v-for="apps in applications">
-                {{ apps }}
-                <button @click="showPopUp(apps.user_id)">Megtekintem</button>
-            </div>
-            <div class="mt-5">
-                Kiválasztva
-                <div>
-                    {{ selectedApplicant }}
-                </div>
+                {{ applications }}
+                <button @click="showPopUp(apps.id)">Megtekintem</button>
             </div>
         </section>
         </div>

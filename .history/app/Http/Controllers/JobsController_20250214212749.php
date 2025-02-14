@@ -190,7 +190,9 @@ class JobsController extends Controller{
             $query->select('id','name','email','phone_number');
         },
         'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
+        ->where('user_id','=',auth()->user()->id)
         ->get()->toArray();
+        dd(auth()->user()->id);
         $cleanedApps = array_map(function($apps) {
             return [
                 'id' => $apps['id'],
@@ -278,8 +280,8 @@ class JobsController extends Controller{
             ];
         },$applications);
 
-        return response()->json([
-            'applicant' => $cleanedApps[0] ?? null,
+        return Inertia::render('Profile/CompanyProfile/Jobs/EditJob',[
+            'applications' => $cleanedApps,
         ]);
     }
     

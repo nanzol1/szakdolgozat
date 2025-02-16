@@ -72,6 +72,15 @@ const submitForm = async () => {
     }catch(error){
         console.error('Hiba történt: '+error);
     }
+  /*axios.transform((data) => ({
+    ...data,
+    ...formData,
+  })).post('/profile/cvmaker/store', {
+    onSuccess: (response) => {
+     const cvId = response.props.id;
+     window.location.href = route('profile.cv.pdf',{id:cvId});
+    },
+  });*/
 };
 
 const setAdditionDatas = (e) => {

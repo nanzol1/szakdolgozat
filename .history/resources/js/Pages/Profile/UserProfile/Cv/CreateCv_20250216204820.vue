@@ -8,7 +8,6 @@ import CV_step3 from './CV-step3.vue';
 import CV_step4 from './CV-step4.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
-import axios from 'axios';
 
 const steps = [
     {component: CV_step1, key: 'step1'},
@@ -19,7 +18,6 @@ const steps = [
 
 const currentStepIndex = ref(-1);
 const isAddition = ref(false);
-const formSent = ref(false);
 
 const formData = reactive({
     firstname:'',
@@ -60,18 +58,16 @@ const updateForm = (data) => {
     Object.assign(formData,data);
 };
 
-const submitForm = async () => {
-    try{
-        const response = await axios.post('/profile/cvmaker/store',{
-            ...formData,
-        });
-
-        const cvId = response.data.cv_id;
-        window.location.href = route('profile.cv.pdf',{id:cvId});
-        formSent.value = true;
-    }catch(error){
-        console.error('Hiba történt: '+error);
-    }
+const submitForm = () => {
+  form.transform((data) => ({
+    ...data,
+    ...formData,
+  })).post('/profile/cvmaker/store', {
+    onSuccess: (response) => {
+     const cvId = response.props.cv_id;
+     location.href = route('profile.cv.pdf',id:cvId);
+    },
+  });
 };
 
 const setAdditionDatas = (e) => {
@@ -130,6 +126,18 @@ const setAdditionDatas = (e) => {
           v-if="currentStepIndex > -1"
         >
           Previous
+        </button>
+        <button
+          @click="nextStep"
+          v-if="currentStepIndex < steps.length - 1 && currentStepIndex !== -1"
+        >
+          Next
+        </button>
+        <button
+          @click="submitForm"
+          v-if="currentStepIndex === steps.length - 1"
+        >
+          Submit
         </button>
                 </div>
             </section>

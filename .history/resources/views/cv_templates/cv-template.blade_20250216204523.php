@@ -69,7 +69,7 @@
         <!-- Összegzés -->
         <div class="section">
             <h2>Summary</h2>
-            {!! clean($cv->more_desc) !!}
+            {!! clean($cv->plain_text) !!}
         </div>
 
         <!-- Tapasztalat -->

@@ -33,19 +33,21 @@ class CVController extends Controller{
             
             $cv_id = Prepared_CV::create($validated);
 
-            return response()->json(['message' => 'CV sikeresen elmentve!','cv_id' => $cv_id]);
+            return Inertia::render('UserProfile/Cv/Prepared_CV',[
+                'message' => 'CV Sikeresen létrehozva!',
+                'cv' => $cv_id,
+            ]);
         }
     }
 
     public function generatePdf($id){
         $cv = Prepared_CV::find($id);
-        $file_name = $cv['firstname'].'_'.$cv['lastname'];
 
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,
         ]);
 
-        return $pdf->download($file_name.'.pdf');
+        return $pdf->download('cv.pdf');
     }
 }
 

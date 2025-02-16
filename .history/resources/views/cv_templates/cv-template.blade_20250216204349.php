@@ -69,7 +69,7 @@
         <!-- Összegzés -->
         <div class="section">
             <h2>Summary</h2>
-            {!! clean($cv->more_desc) !!}
+            {{ $cv->plain_text }}
         </div>
 
         <!-- Tapasztalat -->
@@ -80,7 +80,6 @@
                     <strong>{{ $experience['title'] }}, {{ $experience['employer'] }}</strong><br>
                     {{ $experience['startdate'] }} – {{ $experience['enddate'] }}<br>
                     <div>
-                    {!! clean($experience['description']) !!}
                     </div>
                 </p>
             @endforeach

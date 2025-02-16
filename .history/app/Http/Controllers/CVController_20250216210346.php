@@ -39,7 +39,7 @@ class CVController extends Controller{
 
     public function generatePdf($id){
         $cv = Prepared_CV::find($id);
-        $file_name = $cv['firstname'].'_'.$cv['lastname'];
+        $file_name = $cv['firstname'].'_'.$cv['last_name'];
 
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,

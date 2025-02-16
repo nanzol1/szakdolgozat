@@ -31,21 +31,18 @@ class CVController extends Controller{
                 "plain_text" => "string|nullable",
             ])->validate();
             
-            $cv_id = Prepared_CV::create($validated);
-
-            return response()->json(['message' => 'CV sikeresen elmentve!','cv_id' => $cv_id]);
+            Prepared_CV::create($validated);
         }
     }
 
     public function generatePdf($id){
         $cv = Prepared_CV::find($id);
-        $file_name = $cv['firstname'].'_'.$cv['lastname'];
 
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,
         ]);
 
-        return $pdf->download($file_name.'.pdf');
+        return $pdf->download('cv.pdf');
     }
 }
 

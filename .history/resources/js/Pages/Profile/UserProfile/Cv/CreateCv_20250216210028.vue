@@ -19,7 +19,6 @@ const steps = [
 
 const currentStepIndex = ref(-1);
 const isAddition = ref(false);
-const formSent = ref(false);
 
 const formData = reactive({
     firstname:'',
@@ -62,16 +61,19 @@ const updateForm = (data) => {
 
 const submitForm = async () => {
     try{
-        const response = await axios.post('/profile/cvmaker/store',{
-            ...formData,
-        });
-
-        const cvId = response.data.cv_id;
-        window.location.href = route('profile.cv.pdf',{id:cvId});
-        formSent.value = true;
+        const response = await axios.post('/profile/cvmaker/store');
     }catch(error){
         console.error('Hiba történt: '+error);
     }
+  axios.transform((data) => ({
+    ...data,
+    ...formData,
+  })).post('/profile/cvmaker/store', {
+    onSuccess: (response) => {
+     const cvId = response.props.id;
+     window.location.href = route('profile.cv.pdf',{id:cvId});
+    },
+  });
 };
 
 const setAdditionDatas = (e) => {
@@ -130,6 +132,18 @@ const setAdditionDatas = (e) => {
           v-if="currentStepIndex > -1"
         >
           Previous
+        </button>
+        <button
+          @click="nextStep"
+          v-if="currentStepIndex < steps.length - 1 && currentStepIndex !== -1"
+        >
+          Next
+        </button>
+        <button
+          @click="submitForm"
+          v-if="currentStepIndex === steps.length - 1"
+        >
+          Submit
         </button>
                 </div>
             </section>

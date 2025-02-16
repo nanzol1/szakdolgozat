@@ -72,6 +72,15 @@ const submitForm = async () => {
     }catch(error){
         console.error('Hiba történt: '+error);
     }
+  /*axios.transform((data) => ({
+    ...data,
+    ...formData,
+  })).post('/profile/cvmaker/store', {
+    onSuccess: (response) => {
+     const cvId = response.props.id;
+     window.location.href = route('profile.cv.pdf',{id:cvId});
+    },
+  });*/
 };
 
 const setAdditionDatas = (e) => {
@@ -122,7 +131,7 @@ const setAdditionDatas = (e) => {
                     </form>
                 </div>
 
-                <component v-else :is="steps[currentStepIndex].component" :formData="formData" @updateForm="updateForm" @nextStep="nextStep" @submitForm="submitForm"></component>
+                <component v-else :is="steps[currentStepIndex].component" :formData="formData" @updateForm="updateForm" @prevStep="prevStep" @nextStep="nextStep" @submitForm="submitForm"></component>
 
                 <div>
                     <button

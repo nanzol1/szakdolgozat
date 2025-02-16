@@ -293,8 +293,7 @@ class JobsController extends Controller{
         if($applicant){
             $applicant->update(['status' => $status]);
         }
-
-        return back()->with('status',$applicant['status']);
+        return back()->with('status_name',$applicant['status']);
     }
     
 }

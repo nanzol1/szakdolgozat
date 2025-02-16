@@ -291,7 +291,9 @@ class JobsController extends Controller{
         $applicant = Application::where('job_id','=',$jobId)
         ->where('user_id','=',$applicantId)->first();
         if($applicant){
-            $applicant->update(['status' => $status]);
+            if($applicant['status']){
+                $applicant->update(['status' => $status]);
+            }
         }
 
         return back()->with('status',$applicant['status']);

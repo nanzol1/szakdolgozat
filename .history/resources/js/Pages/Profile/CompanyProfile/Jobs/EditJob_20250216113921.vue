@@ -201,8 +201,12 @@ const showPopUp = async (applicantId) => {
 const closePopup = () => {
     isPopup.value = false;
 };
+const computeStatusName = computed(() => {
+    
+});
 watch(status,(newVal) => {
     updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
+    console.log(selectedApplicant.value.status_name);
 });
 </script>
 
@@ -410,6 +414,9 @@ watch(status,(newVal) => {
                 <div v-if="isPopup" class="popup">
                     <button @click="closePopup()">X</button>
                     <div>
+                        {{ computeStatusName }}
+                    </div>
+                    <div>
                         {{ selectedApplicant.name }}
                     </div>
                     <div>
@@ -421,7 +428,7 @@ watch(status,(newVal) => {
                     {{ status }}
                     <template v-for="sts in statuses" :key="sts.id">
                         <label :for="sts.id">{{ sts.name }}</label>
-                        <input type="radio" v-model="status" :id="sts.name" :name="sts.name" :value="sts.id">
+                        <input type="radio" v-model="status" :id="sts.id" :name="sts.id" :value="sts.id">
                     </template>
                 </div>
             </Transition>

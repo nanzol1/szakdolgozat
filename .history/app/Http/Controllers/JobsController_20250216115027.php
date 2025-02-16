@@ -288,13 +288,16 @@ class JobsController extends Controller{
     }
 
     public function updateStatus($jobId,$applicantId, $status){
-        $applicant = Application::where('job_id','=',$jobId)
-        ->where('user_id','=',$applicantId)->first();
+        $applicant = Application::with('job_status')
+        ->where('job_id','=',$jobId)
+        ->where('user_id','=',$applicantId)->first()->get()->toArray();
+        dd($applicant);
         if($applicant){
             $applicant->update(['status' => $status]);
         }
-
-        return back()->with('status',$applicant['status']);
+        return response()->json([
+            'status' => $applicant['status'][0] ?? null,
+        ]);
     }
     
 }

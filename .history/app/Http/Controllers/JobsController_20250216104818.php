@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\JobCategory;
 use App\Models\Employment_type;
-use App\Models\JobStatus;
 use App\Models\Work_schedule;
 use App\Models\JobVacancy;
 use Inertia\Inertia;
@@ -217,7 +216,6 @@ class JobsController extends Controller{
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
             'applications' => $cleanedApps,
-            'statuses' => $statuses,
         ]);
     }
 
@@ -291,7 +289,9 @@ class JobsController extends Controller{
         $applicant = Application::where('job_id','=',$jobId)
         ->where('user_id','=',$applicantId)->first();
         if($applicant){
-            $applicant->update(['status' => $status]);
+            if($applicant['status']){
+                $applicant->update(['status' => $status]);
+            }
         }
 
         return back()->with('status',$applicant['status']);

@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\JobCategory;
 use App\Models\Employment_type;
-use App\Models\JobStatus;
 use App\Models\Work_schedule;
 use App\Models\JobVacancy;
 use Inertia\Inertia;
@@ -192,7 +191,6 @@ class JobsController extends Controller{
         },
         'job_status'])->where('job_id','=',$request->id)->where('is_deleted','!=','1')
         ->get()->toArray();
-        $statuses = JobStatus::all();
         $cleanedApps = array_map(function($apps) {
             return [
                 'id' => $apps['id'],
@@ -217,7 +215,6 @@ class JobsController extends Controller{
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
             'applications' => $cleanedApps,
-            'statuses' => $statuses,
         ]);
     }
 
@@ -273,7 +270,6 @@ class JobsController extends Controller{
             return [
                 'id' => $apps['id'],
                 'status_name' => $apps['job_status']['name'],
-                'status_id' => $apps['status'],
                 'job_id' => $apps['job_id'],
                 'user_id' => $apps['user']['id'],
                 'name' => $apps['user']['name'],
@@ -288,13 +284,11 @@ class JobsController extends Controller{
     }
 
     public function updateStatus($jobId,$applicantId, $status){
-        $applicant = Application::where('job_id','=',$jobId)
+        $application = Application::where('job_id','=',$jobId)
         ->where('user_id','=',$applicantId)->first();
-        if($applicant){
-            $applicant->update(['status' => $status]);
+        if($application){
+            dd($application);
         }
-
-        return back()->with('status',$applicant['status']);
     }
     
 }

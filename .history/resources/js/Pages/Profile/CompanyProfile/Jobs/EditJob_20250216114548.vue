@@ -201,8 +201,16 @@ const showPopUp = async (applicantId) => {
 const closePopup = () => {
     isPopup.value = false;
 };
+const computeStatusName = computed(() => {
+    props.statuses.forEach(e => {
+        if(e.id == selectedApplicant.value.status_id){
+            console.log(e);
+        }
+    });
+});
 watch(status,(newVal) => {
     updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
+    //console.log(computeStatusName);
 });
 </script>
 
@@ -409,6 +417,9 @@ watch(status,(newVal) => {
             <Transition>
                 <div v-if="isPopup" class="popup">
                     <button @click="closePopup()">X</button>
+                    <div>
+                        {{ computeStatusName }}
+                    </div>
                     <div>
                         {{ selectedApplicant.name }}
                     </div>

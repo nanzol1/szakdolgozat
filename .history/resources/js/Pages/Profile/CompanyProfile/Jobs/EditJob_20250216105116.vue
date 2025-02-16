@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, Head, router, usePage } from '@inertiajs/vue3';
+import { Link, useForm, Head, router } from '@inertiajs/vue3';
 import { computed, onMounted, ref, watch } from 'vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import _ from 'lodash';
@@ -31,7 +31,7 @@ const props = defineProps({
         type:Object,
     }
 });
-const page = usePage();
+
 const checkboxes = ref(props.job.position || []);
 const searchQuery = ref('');
 const searchQuerySchedule = ref('');
@@ -40,8 +40,7 @@ const schedules = ref([]);
 const activeCheckbox = ref(false);
 const isPopup = ref(false);
 const selectedApplicant = ref(null);
-const status = ref('');
-
+const status = ref([]);
 
 const form = useForm({
     id:props.job.id,
@@ -182,9 +181,9 @@ onMounted(() => {
 });
 const updateStatus = async (id,applicantId,statusId) => {
     if(statusId){
-        await router.patch(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
+        await router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:applicantId,statusId:statusId}));
     }
-};
+}
 const showPopUp = async (applicantId) => {
     try{
         const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
@@ -193,7 +192,6 @@ const showPopUp = async (applicantId) => {
         }
         selectedApplicant.value = response.data.applicant;
         isPopup.value = true;
-        status.value = response.data.applicant.status_id;
     } catch (error){
         console.error('Hiba történt a lekérés közben: ',error);
     }
@@ -201,9 +199,6 @@ const showPopUp = async (applicantId) => {
 const closePopup = () => {
     isPopup.value = false;
 };
-watch(status,(newVal) => {
-    updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
-});
 </script>
 
 <template>
@@ -410,6 +405,9 @@ watch(status,(newVal) => {
                 <div v-if="isPopup" class="popup">
                     <button @click="closePopup()">X</button>
                     <div>
+                        {{ selectedApplicant.status_name }}
+                    </div>
+                    <div>
                         {{ selectedApplicant.name }}
                     </div>
                     <div>
@@ -418,10 +416,8 @@ watch(status,(newVal) => {
                     <div>
                         {{ selectedApplicant.phone }}
                     </div>
-                    {{ status }}
                     <template v-for="sts in statuses" :key="sts.id">
-                        <label :for="sts.id">{{ sts.name }}</label>
-                        <input type="radio" v-model="status" :id="sts.name" :name="sts.name" :value="sts.id">
+                        <input type="radio" v-model="status" :id="sts.id">
                     </template>
                 </div>
             </Transition>

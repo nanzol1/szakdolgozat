@@ -182,7 +182,7 @@ onMounted(() => {
 });
 const updateStatus = async (id,applicantId,statusId) => {
     if(statusId){
-        await router.patch(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
+        const response = await router.patch(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
     }
 };
 const showPopUp = async (applicantId) => {
@@ -201,8 +201,16 @@ const showPopUp = async (applicantId) => {
 const closePopup = () => {
     isPopup.value = false;
 };
+const computeStatusName = computed(() => {
+    props.statuses.forEach(e => {
+        if(e.id == selectedApplicant.value.status_id){
+            console.log(e);
+        }
+    });
+});
 watch(status,(newVal) => {
     updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
+    //console.log(computeStatusName);
 });
 </script>
 

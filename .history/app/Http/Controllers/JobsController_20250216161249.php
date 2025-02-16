@@ -160,6 +160,7 @@ class JobsController extends Controller{
             ->where('is_deleted','!=','1')
             ->get()
             ->toArray();
+        dd($applications);
         $jobs = array_map(function($app) {
             return [
                 'job_name' => $app['job_vacancy']['name'] ?? '',

@@ -148,7 +148,6 @@ class CompanyProfileController extends Controller{
         $notifications = Application_notification::where('created_by', '=',$request->user()->id)
         ->get()
         ->toArray();
-        return response()->json($notifications);
     }
     public function destroy(Request $request): RedirectResponse
     {

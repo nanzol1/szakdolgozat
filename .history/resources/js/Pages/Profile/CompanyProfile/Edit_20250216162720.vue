@@ -32,6 +32,7 @@ const fetchNotifications = async () => {
     try{
         const response = await axios.get(route('cprofile.fetch.notifications'));
         notifications.value = response.data;
+        console.log("Most lett lekérve");
     }catch(error){
         console.error('Hiba történt: '+error);
     }
@@ -54,9 +55,7 @@ onMounted(() => {
                 Profile
             </h2>
             <Link :href="route('cprofile.myjobs')" class="dark:text-white">Hirdetett munkák</Link>
-            <div>
-                Az elmúlt 1 órában új jelentkezők érkeztek
-            </div>
+            Az elmúlt 1 órában új jelentkezők érkeztek
         </template>
 
         <div class="py-12">

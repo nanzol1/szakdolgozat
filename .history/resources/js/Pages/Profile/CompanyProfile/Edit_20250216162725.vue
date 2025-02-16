@@ -54,9 +54,7 @@ onMounted(() => {
                 Profile
             </h2>
             <Link :href="route('cprofile.myjobs')" class="dark:text-white">Hirdetett munkák</Link>
-            <div>
-                Az elmúlt 1 órában új jelentkezők érkeztek
-            </div>
+            Az elmúlt 1 órában új jelentkezők érkeztek
         </template>
 
         <div class="py-12">

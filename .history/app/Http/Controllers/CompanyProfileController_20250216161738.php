@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Application_notification;
 use App\Models\JobCategory;
 use App\Models\Employment_type;
 use App\Models\Work_schedule;
@@ -144,11 +143,8 @@ class CompanyProfileController extends Controller{
         }
     }
 
-    public function getNofitications(Request $request){
-        $notifications = Application_notification::where('created_by', '=',$request->user()->id)
-        ->get()
-        ->toArray();
-        return response()->json($notifications);
+    public function getNofitications(){
+        
     }
     public function destroy(Request $request): RedirectResponse
     {

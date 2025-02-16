@@ -5,7 +5,6 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import UpdateJobVacancies from './Partials/UpdateJobVacancies.vue';
-import { onMounted, ref } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -36,11 +35,6 @@ const fetchNotifications = async () => {
         console.error('Hiba történt: '+error);
     }
 };
-
-onMounted(() => {
-    fetchNotifications();
-    setInterval(fetchNotifications,6000000);
-});
 </script>
 
 <template>
@@ -54,9 +48,6 @@ onMounted(() => {
                 Profile
             </h2>
             <Link :href="route('cprofile.myjobs')" class="dark:text-white">Hirdetett munkák</Link>
-            <div>
-                Az elmúlt 1 órában új jelentkezők érkeztek
-            </div>
         </template>
 
         <div class="py-12">

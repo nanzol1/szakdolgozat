@@ -105,6 +105,7 @@ class JobsController extends Controller{
                 ])->validate();
 
                 $created_by = JobVacancy::where('id','=', $job_id)->first();
+                dd($created_by);
 
                 //Ellenőrzőm hogy van-e már létrehozott rekord a usernek
                 $findJob = Application::where('job_id','=',$job_id)
@@ -118,7 +119,6 @@ class JobsController extends Controller{
                         'job_id' => $validate['job_id'],
                         'message' => 'Új jelentkező érkezett',
                         'is_read' => 0,
-                        'created_by' => $created_by['created_by'],
                     ]);
                     Application::create($validate);
                 }
@@ -162,15 +162,15 @@ class JobsController extends Controller{
             ->toArray();
         $jobs = array_map(function($app) {
             return [
-                'job_name' => $app['job_vacancy']['name'] ?? '',
-                'job_address' => $app['job_vacancy']['address'] ?? '',
-                'job_description' => $app['job_vacancy']['description'] ?? '',
-                'job_requirements' => $app['job_vacancy']['requirements'] ?? '',
-                'job_cname' => $app['job_vacancy']['companies']['company_name'] ?? '',
-                'job_cpict' => $app['job_vacancy']['companies']['profile_pict'] ?? '',
-                'job_catname' => $app['job_vacancy']['jobs_category']['name'] ?? '',
-                'job_scatname' => $app['job_vacancy']['jobs_subcategory']['name'] ?? '',
-                'job_status_name' => $app['job_status']['name'] ?? '',
+                'job_name' => $app['job_vacancy']['name'],
+                'job_address' => $app['job_vacancy']['address'],
+                'job_description' => $app['job_vacancy']['description'],
+                'job_requirements' => $app['job_vacancy']['requirements'],
+                'job_cname' => $app['job_vacancy']['companies']['company_name'],
+                'job_cpict' => $app['job_vacancy']['companies']['profile_pict'],
+                'job_catname' => $app['job_vacancy']['jobs_category']['name'],
+                'job_scatname' => $app['job_vacancy']['jobs_subcategory']['name'],
+                'job_status_name' => $app['job_status']['name'],
             ];
         },$applications);
 

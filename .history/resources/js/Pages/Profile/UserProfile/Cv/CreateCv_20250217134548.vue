@@ -33,9 +33,9 @@ const formData = reactive({
     city:'',
     address:'',
     zip:'',
-    exps: [],
-    educations: [],
-    skills: [],
+    exps: {},
+    educations: {},
+    skills: {},
     more_desc:'',
 });
 
@@ -100,7 +100,7 @@ const setAdditionDatas = (e) => {
 const handleImage = (event) => {
     const file = event.target.files[0];
     if(file && file.type.startsWith('image/')){
-        formData.cv_picture = file;
+        formData.cv_picture = file.name;
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.value = e.target.result;

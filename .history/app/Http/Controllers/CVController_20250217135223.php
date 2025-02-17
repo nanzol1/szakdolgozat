@@ -54,8 +54,8 @@ class CVController extends Controller{
             'cv' => $cv,
         ]);
 
-
-        return $pdf->download($file_name.'.pdf');
+        //return $pdf->download($file_name.'.pdf');
+        return view('cv_templates/cv-template',['cv'=> $cv]);
     }
 }
 

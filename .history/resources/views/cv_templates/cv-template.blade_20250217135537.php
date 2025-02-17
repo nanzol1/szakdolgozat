@@ -58,9 +58,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="{{ public_path('storage/uploads/cv_maker/' . $cv->cv_picture) }}" alt="Image">
-    </div>
+    <img src="{{ asset('storage/cv_pictures/' . $user->cv_picture) }}" alt="">
     <div class="container">
         <!-- Fejléc -->
         <div class="header">

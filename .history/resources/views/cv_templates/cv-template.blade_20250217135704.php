@@ -59,7 +59,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ public_path('storage/uploads/cv_maker/' . $cv->cv_picture) }}" alt="Image">
+        <img src="{{ asset('storage/uploads/cv_maker/' . $cv->cv_picture) }}" alt="">
     </div>
     <div class="container">
         <!-- Fejléc -->

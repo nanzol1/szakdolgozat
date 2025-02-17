@@ -33,9 +33,9 @@ const formData = reactive({
     city:'',
     address:'',
     zip:'',
-    exps: [],
-    educations: [],
-    skills: [],
+    exps: {},
+    educations: {},
+    skills: {},
     more_desc:'',
 });
 
@@ -65,24 +65,8 @@ const updateForm = (data) => {
 
 const submitForm = async () => {
     try{
-        const formDatas = new FormData();
-        formDatas.append('cv_picture',formData.cv_picture);
-        formDatas.append('firstname',formData.firstname);
-        formDatas.append('lastname',formData.lastname);
-        formDatas.append('phone',formData.phone);
-        formDatas.append('email',formData.email);
-        formDatas.append('county',formData.county);
-        formDatas.append('city',formData.city);
-        formDatas.append('address',formData.address);
-        formDatas.append('zip',formData.zip);
-        formDatas.append('exps',JSON.stringify(formData.exps));
-        formDatas.append('educations',JSON.stringify(formData.educations));
-        formDatas.append('skills',JSON.stringify(formData.skills));
-        formDatas.append('more_desc',formData.more_desc);
-        const response = await axios.post('/profile/cvmaker/store',formDatas,{
-            headers:{
-                'Content-Type':'multipart/form-data',
-            },
+        const response = await axios.post('/profile/cvmaker/store',{
+            ...formData,
         });
 
         const cvId = response.data.cv_id;
@@ -100,7 +84,6 @@ const setAdditionDatas = (e) => {
 const handleImage = (event) => {
     const file = event.target.files[0];
     if(file && file.type.startsWith('image/')){
-        formData.cv_picture = file;
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.value = e.target.result;
@@ -108,7 +91,6 @@ const handleImage = (event) => {
         reader.readAsDataURL(file);
     }else{
         imagePreview.value = null;
-        formData.cv_picture = null;
     }
 };
 </script>
@@ -121,7 +103,9 @@ const handleImage = (event) => {
                 <div v-if="currentStepIndex === -1">
                     <form @submit.prevent="handleMainFormSubmit" enctype="multipart/form-data">
                         <div>
-                            <input type="file" @change="handleImage" name="cv_picture"> 
+                            <input type="file" @change="formData.cv_picture = $event.target.files[0]">
+
+                            
                         </div>
                         <div>
                             <InputLabel for="firstname" value="Vezetéknév"></InputLabel>
@@ -170,9 +154,9 @@ const handleImage = (event) => {
                 </div>
             </section>
             <section class="w-full">
-                ss {{ formData.cv_picture }}
-                <div v-if="imagePreview">
-                    Kép: <img :src="imagePreview" alt="Image preview">
+                <div>
+                    {{ handleImage }}
+                    Kép: <img src="" alt="">
                 </div>
                 <div>
                     Vezetéknév: {{ formData.firstname }}

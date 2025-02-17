@@ -34,6 +34,7 @@ class CVController extends Controller{
                 "more_desc" => "string|nullable",
                 "plain_text" => "string|nullable",
             ])->validate();
+            dd($validated);
             if($request->hasFile('cv_picture')){
                 $path = $request->file('cv_picture');
                 $validated['cv_picture'] = $path->hashName();
@@ -53,7 +54,6 @@ class CVController extends Controller{
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,
         ]);
-
 
         return $pdf->download($file_name.'.pdf');
     }

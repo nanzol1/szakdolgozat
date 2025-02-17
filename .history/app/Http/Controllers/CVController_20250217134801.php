@@ -19,7 +19,7 @@ class CVController extends Controller{
         $datas['skills'] = json_decode($datas['skills'],true);
         if($datas){
             $validated = Validator::make($datas,[
-                "cv_picture" => 'nullable|image',
+                "cv_picture" => 'nullable',
                 "firstname" => "string|required|min:0|max:255",
                 "lastname" => "string|required|min:0|max:255",
                 "phone" => "string|required",
@@ -53,7 +53,6 @@ class CVController extends Controller{
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,
         ]);
-
 
         return $pdf->download($file_name.'.pdf');
     }

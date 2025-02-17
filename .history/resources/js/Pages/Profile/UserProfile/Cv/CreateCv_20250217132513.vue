@@ -66,20 +66,14 @@ const updateForm = (data) => {
 const submitForm = async () => {
     try{
         const formDatas = new FormData();
-        formDatas.append('cv_picture',formData.cv_picture);
-        formDatas.append('firstname',formData.firstname);
-        formDatas.append('lastname',formData.lastname);
-        formDatas.append('phone',formData.phone);
-        formDatas.append('email',formData.email);
-        formDatas.append('county',formData.county);
-        formDatas.append('city',formData.city);
-        formDatas.append('address',formData.address);
-        formDatas.append('zip',formData.zip);
-        formDatas.append('exps',JSON.stringify(formData.exps));
-        formDatas.append('educations',JSON.stringify(formData.educations));
-        formDatas.append('skills',JSON.stringify(formData.skills));
-        formDatas.append('more_desc',formData.more_desc);
-        const response = await axios.post('/profile/cvmaker/store',formDatas,{
+        Object.keys(formData).forEach(key => {
+            if(key === 'cv_picture' && formData[key]){
+                formDatas.append(key,formData[key]);
+            }else{
+                formDatas.append(key, formData[key]);
+            }
+        });
+        const response = await axios.post('/profile/cvmaker/store', formDatas, {
             headers:{
                 'Content-Type':'multipart/form-data',
             },

@@ -54,6 +54,8 @@ class CVController extends Controller{
             'cv' => $cv,
         ]);
 
+        $pdf->image(public_path('storage/cv_pictures/' . $cv->cv_picture));
+
 
         return $pdf->download($file_name.'.pdf');
     }

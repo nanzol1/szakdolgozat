@@ -54,7 +54,6 @@ class CVController extends Controller{
             'cv' => $cv,
         ]);
 
-
         return $pdf->download($file_name.'.pdf');
     }
 }

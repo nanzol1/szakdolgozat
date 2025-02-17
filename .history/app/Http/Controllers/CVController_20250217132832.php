@@ -14,12 +14,9 @@ class CVController extends Controller{
 
     public function store(Request $request){
         $datas = $request->all();
-        $datas['exps'] = json_decode($datas['exps'],true);
-        $datas['educations'] = json_decode($datas['educations'],true);
-        $datas['skills'] = json_decode($datas['skills'],true);
         if($datas){
             $validated = Validator::make($datas,[
-                "cv_picture" => 'nullable|image',
+                "cv_picture" => 'nullable|mimes:png,jpg,gif',
                 "firstname" => "string|required|min:0|max:255",
                 "lastname" => "string|required|min:0|max:255",
                 "phone" => "string|required",
@@ -28,12 +25,13 @@ class CVController extends Controller{
                 "city" => "nullable|string",
                 "address" => "nullable|string",
                 "zip" => "nullable|string",
-                "exps" => "nullable",
-                "educations" => "nullable",
-                "skills" => "nullable",
+                "exps" => "array|nullable",
+                "educations" => "array|nullable",
+                "skills" => "array|nullable",
                 "more_desc" => "string|nullable",
                 "plain_text" => "string|nullable",
             ])->validate();
+            dd($validated);
             if($request->hasFile('cv_picture')){
                 $path = $request->file('cv_picture');
                 $validated['cv_picture'] = $path->hashName();
@@ -53,7 +51,6 @@ class CVController extends Controller{
         $pdf = PDF::loadView("cv_templates/cv-template",[
             'cv' => $cv,
         ]);
-
 
         return $pdf->download($file_name.'.pdf');
     }

@@ -33,9 +33,9 @@ const formData = reactive({
     city:'',
     address:'',
     zip:'',
-    exps: [],
-    educations: [],
-    skills: [],
+    exps: {},
+    educations: {},
+    skills: {},
     more_desc:'',
 });
 
@@ -75,13 +75,13 @@ const submitForm = async () => {
         formDatas.append('city',formData.city);
         formDatas.append('address',formData.address);
         formDatas.append('zip',formData.zip);
-        formDatas.append('exps',JSON.stringify(formData.exps));
-        formDatas.append('educations',JSON.stringify(formData.educations));
-        formDatas.append('skills',JSON.stringify(formData.skills));
+        formDatas.append('exps',formData.exps);
+        formDatas.append('educations',formData.educations);
+        formDatas.append('skills',formData.skills);
         formDatas.append('more_desc',formData.more_desc);
         const response = await axios.post('/profile/cvmaker/store',formDatas,{
             headers:{
-                'Content-Type':'multipart/form-data',
+                'Content-Type':'multipart/form-data';
             },
         });
 
@@ -100,7 +100,7 @@ const setAdditionDatas = (e) => {
 const handleImage = (event) => {
     const file = event.target.files[0];
     if(file && file.type.startsWith('image/')){
-        formData.cv_picture = file;
+        formData.cv_picture = file.name;
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.value = e.target.result;

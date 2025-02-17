@@ -24,7 +24,7 @@ const formSent = ref(false);
 const imagePreview = ref(null);
 
 const formData = reactive({
-    cv_picture: null,
+    cv_picture: [],
     firstname:'',
     lastname:'',
     phone:'',
@@ -33,9 +33,9 @@ const formData = reactive({
     city:'',
     address:'',
     zip:'',
-    exps: [],
-    educations: [],
-    skills: [],
+    exps: {},
+    educations: {},
+    skills: {},
     more_desc:'',
 });
 
@@ -43,9 +43,9 @@ const form = useForm({
     ...formData,
 });
 
-const handleMainFormSubmit = () => {
+/*const handleMainFormSubmit = () => {
   nextStep();
-};
+};*/
 
 const nextStep = () => {
   if (currentStepIndex.value < steps.length - 1) {
@@ -65,24 +65,8 @@ const updateForm = (data) => {
 
 const submitForm = async () => {
     try{
-        const formDatas = new FormData();
-        formDatas.append('cv_picture',formData.cv_picture);
-        formDatas.append('firstname',formData.firstname);
-        formDatas.append('lastname',formData.lastname);
-        formDatas.append('phone',formData.phone);
-        formDatas.append('email',formData.email);
-        formDatas.append('county',formData.county);
-        formDatas.append('city',formData.city);
-        formDatas.append('address',formData.address);
-        formDatas.append('zip',formData.zip);
-        formDatas.append('exps',JSON.stringify(formData.exps));
-        formDatas.append('educations',JSON.stringify(formData.educations));
-        formDatas.append('skills',JSON.stringify(formData.skills));
-        formDatas.append('more_desc',formData.more_desc);
-        const response = await axios.post('/profile/cvmaker/store',formDatas,{
-            headers:{
-                'Content-Type':'multipart/form-data',
-            },
+        const response = await axios.post('/profile/cvmaker/store',{
+            ...formData,
         });
 
         const cvId = response.data.cv_id;
@@ -119,7 +103,7 @@ const handleImage = (event) => {
         <div class="flex">
             <section class="w-full">
                 <div v-if="currentStepIndex === -1">
-                    <form @submit.prevent="handleMainFormSubmit" enctype="multipart/form-data">
+                    <form @submit.prevent="submitForm" enctype="multipart/form-data">
                         <div>
                             <input type="file" @change="handleImage" name="cv_picture"> 
                         </div>
@@ -155,6 +139,8 @@ const handleImage = (event) => {
                         <div>
                             <button type="submit" class="dark:text-white">Next</button>
                         </div>
+                        <button type="submit">Submit</button>
+
                     </form>
                 </div>
 

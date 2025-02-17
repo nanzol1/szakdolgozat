@@ -161,12 +161,6 @@ class ProfileController extends Controller
 
             if($validated){
                 $image = $request->file('profile_photo');
-                
-                if($user->profile_photo_path){
-                    Storage::disk('public')->delete('uploads/profile_picture/'.$user->id.'/'.$user->profile_photo_path);
-                    $request->user()->update(['profile_photo_path'=> null]);
-                }
-
                 $image->store('uploads/profile_picture/'.$request->user()->id, 'public');
 
                 $request->user()->update(['profile_photo_path' => $image->hashName()]);

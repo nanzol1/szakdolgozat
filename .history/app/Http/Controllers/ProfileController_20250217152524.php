@@ -151,9 +151,9 @@ class ProfileController extends Controller
         }
     }
 
-    public function uploadProfilePicture(Request $request){
+    public function uploadProfilePicture(Request $request){: never
         $data = $request->all();
-        $user = User::where('email', $request->user()->email)->first();
+        dd();
         if($request->hasFile('profile_photo')){
             $validated = Validator::make($data, [
                 'profile_photo' => 'required|image',
@@ -161,12 +161,6 @@ class ProfileController extends Controller
 
             if($validated){
                 $image = $request->file('profile_photo');
-                
-                if($user->profile_photo_path){
-                    Storage::disk('public')->delete('uploads/profile_picture/'.$user->id.'/'.$user->profile_photo_path);
-                    $request->user()->update(['profile_photo_path'=> null]);
-                }
-
                 $image->store('uploads/profile_picture/'.$request->user()->id, 'public');
 
                 $request->user()->update(['profile_photo_path' => $image->hashName()]);

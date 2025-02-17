@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Prepared_CV;
-use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -42,6 +41,10 @@ class CVController extends Controller{
             }
             
             $cv_id = Prepared_CV::create($validated);
+
+            if($cv_id){
+                $user = User::where('email', $request->email)->first();
+            }
 
             return response()->json(['message' => 'CV sikeresen elmentve!','cv_id' => $cv_id]);
         }

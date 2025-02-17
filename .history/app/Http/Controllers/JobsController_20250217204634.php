@@ -64,7 +64,7 @@ class JobsController extends Controller{
     }
 
     public function jobView($id){
-        if(auth()->guard('web')->check()){
+        if(auth()->guard('web')->check() || auth()->guard('company')->check()){
             $jobVacancy = JobVacancy::with('jobs_category','jobs_subcategory','companies')->where('id','=',$id)->first();
             $applications = Application::where('user_id','=',request()->user()->id)->where('job_id','=',$id)->get();
             $cleanedData = [
@@ -86,7 +86,7 @@ class JobsController extends Controller{
     }
 
     public function applyForJob(Request $request){
-        if(auth()->guard('web')->check()){
+        if(auth()->guard('web')->check() || auth()->guard('company')->check()){
             if($request->job_id){
                 $job_id = $request->job_id;
                 $user_id = $request->user()->id;
@@ -128,7 +128,7 @@ class JobsController extends Controller{
     }
 
     public function revokeApplication(Request $request){
-        if(auth()->guard('web')->check()){
+        if(auth()->guard('web')->check() || auth()->guard('company')->check()){
             if($request->job_id){
                 $findJob = Application::where('job_id','=',$request->job_id)
                 ->where('user_id','=',$request->user()->id)

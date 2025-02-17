@@ -43,6 +43,13 @@ class CVController extends Controller{
             
             $cv_id = Prepared_CV::create($validated);
 
+            if($cv_id){
+                $user = User::where('email', $request->user()->email)->first();
+                if($user->cv_file){
+                    $request->user()->update(['']);
+                }
+            }
+
             return response()->json(['message' => 'CV sikeresen elmentve!','cv_id' => $cv_id]);
         }
     }

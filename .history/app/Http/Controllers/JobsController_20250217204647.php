@@ -128,7 +128,7 @@ class JobsController extends Controller{
     }
 
     public function revokeApplication(Request $request){
-        if(auth()->guard('web')->check()){
+        if(auth()->guard('web')->check() || auth()->guard('company')->check()){
             if($request->job_id){
                 $findJob = Application::where('job_id','=',$request->job_id)
                 ->where('user_id','=',$request->user()->id)

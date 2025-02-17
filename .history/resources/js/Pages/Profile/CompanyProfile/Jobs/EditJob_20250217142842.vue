@@ -182,7 +182,6 @@ onMounted(() => {
 });
 const updateStatus = async (id,applicantId,statusId) => {
     await router.put(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
-    status.value = statusId;
 };
 const showPopUp = async (applicantId) => {
     try{
@@ -200,7 +199,6 @@ const closePopup = () => {
 watch(status,(newVal) => {
     if(status.value < 2){
         router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:selectedApplicant.value.user_id,statusId:2}));
-        status.value = 2;
     }else{
         updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
     }
@@ -419,6 +417,7 @@ watch(status,(newVal) => {
                     <div>
                         {{ selectedApplicant.phone }}
                     </div>
+                    {{ status.valueOf() }}
                     <template v-for="(sts, index) in statuses" :key="sts.id">
                         <div v-if="sts.name !== 'Jelentkezett'">
                             <label :for="sts.id">{{ sts.name }}</label>

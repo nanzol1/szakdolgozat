@@ -182,14 +182,13 @@ onMounted(() => {
 });
 const updateStatus = async (id,applicantId,statusId) => {
     await router.put(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
-    status.value = statusId;
 };
 const showPopUp = async (applicantId) => {
     try{
         const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
         selectedApplicant.value = response.data.applicant;
-        status.value = response.data.applicant.status_id;
         isPopup.value = true;
+        status.value = response.data.applicant.status_id;
     } catch (error){
         console.error('Hiba történt a lekérés közben: ',error);
     }
@@ -200,7 +199,7 @@ const closePopup = () => {
 watch(status,(newVal) => {
     if(status.value < 2){
         router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:selectedApplicant.value.user_id,statusId:2}));
-        status.value = 2;
+        status.value = newVal;
     }else{
         updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
     }

@@ -1,15 +1,15 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, Head, router, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, ref, watch } from 'vue';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed, ref, watch } from 'vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import _ from 'lodash';
 import axios from 'axios';
 
+const user = usePage().props.auth.user;
 
 const props = defineProps({
     categories:{
@@ -20,77 +20,58 @@ const props = defineProps({
     },
     work_schedules:{
         type:Object,
-    },
-    job:{
-        type:Object,
-    },
-    applications:{
-        type:Object,
-    },
-    statuses:{
-        type:Object,
     }
 });
-const page = usePage();
-const checkboxes = ref(props.job.position || []);
+
+const checkboxes = ref([]);
 const searchQuery = ref('');
 const searchQuerySchedule = ref('');
 const employments = ref([]);
 const schedules = ref([]);
-const activeCheckbox = ref(false);
-const isPopup = ref(false);
-const selectedApplicant = ref(null);
-const status = ref('');
-
 
 const form = useForm({
-    id:props.job.id,
-    name:props.job.name,
-    active:props.job.active,
-    description:props.job.description,
-    requirements:props.job.requirements,
-    payment:props.job.payment || '0',
-    position: checkboxes.value,
-    created_by: props.job.created_by,
-    maincateg_id: props.job.maincateg_id,
-    subcateg_id: props.job.subcateg_id,
-    employment_type: props.job.employment_type || [],
-    work_schedules: props.job.work_schedules || [],
-    zip_address: props.job.address,
-    county_address:props.job.address,
-    place_address:props.job.address,
+    name:'',
+    active:1,
+    position:[],
+    description:'',
+    requirements:'',
+    payment:'',
+    created_by: user.id,
+    maincateg_id: '',
+    subcateg_id: '',
+    employment_type: employments.value || [],
+    work_schedules: schedules.value || [],
+    zip_address: '',
+    county_address:'',
+    place_address:'',
 });
+
 
 const checkMainCategory = (category) => {
     const mainCategoryId = 'm' + category.maincateg_id;
     const subCategoryId = 's' + category.id;
 
     if (checkboxes.value.includes(subCategoryId)) {
-        checkboxes.value = checkboxes.value.filter(item => !item.startsWith('s'));
-
-        checkboxes.value.push(subCategoryId);
-
-        checkboxes.value = checkboxes.value.filter(item => !item.startsWith('m'));
-
         if (!checkboxes.value.includes(mainCategoryId)) {
             checkboxes.value.push(mainCategoryId);
         }
     } else {
-        const hasOtherSubcategories = checkboxes.value.some(item => {
-            return item.startsWith('s') && item !== subCategoryId && item.split('s')[1] === category.maincateg_id.toString();
-        });
+        const hasOtherSubcategories = props.categories[category.maincateg_id]?.subcategories.some(subcat => 
+            checkboxes.value.includes('s' + subcat.id)
+        );
 
         if (!hasOtherSubcategories) {
-            checkboxes.value = checkboxes.value.filter(item => item !== mainCategoryId);
+            const index = checkboxes.value.indexOf(mainCategoryId);
+            if (index !== -1) {
+                checkboxes.value.splice(index, 1);
+            }
         }
     }
-};
-
-
+}
 
 const debounceSearch = _.debounce(async () => {
     if(searchQuery.value.length >= 3){
-        const response = await axios.get('/search-employment',{
+        const response = await axios.get('profile/employment',{
             params: {employment_type: searchQuery.value},
         });
         employments.value = response.data.employmenttype;
@@ -99,7 +80,7 @@ const debounceSearch = _.debounce(async () => {
     }
 
     if(searchQuerySchedule.value.length >= 3){
-        const response = await axios.get('/search-schedules',{
+        const response = await axios.get('profile/schedules',{
             params: {work_schedules: searchQuerySchedule.value},
         });
         schedules.value = response.data.schedules;
@@ -116,21 +97,6 @@ const computeEmployments = computed(() => {
         }));
     }else{
         return props.employment_types;
-    }
-});
-
-const computeAddress = computed(() => {
-    let address = props.job.address || '';
-    if(address){
-        if(address.split(',')[0].length > 0){
-            form.zip_address = address.split(',')[0];
-        }
-        if(address.split(',')[1].length > 0){
-            form.county_address = address.split(',')[1];
-        }
-        if(address.split(',')[2].length > 0){
-            form.place_address = address.split(',')[2];
-        }
     }
 });
 
@@ -166,56 +132,23 @@ watch(checkboxes,(newVal) => {
     }
 }, {deep:true});
 
-watch(activeCheckbox,(e) => {
-    if(e === true){
-        form.active = 1;
-    }else{
-        form.active = 0;
-    }
-});
-onMounted(() => {
-    if(props.job.active === 1){
-        activeCheckbox.value = true;
-    }else{
-        activeCheckbox.value = false;
-    }
-});
-const updateStatus = async (id,applicantId,statusId) => {
-    await router.put(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
-    status.value = statusId;
-};
-const showPopUp = async (applicantId) => {
-    try{
-        const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
-        selectedApplicant.value = response.data.applicant;
-        status.value = response.data.applicant.status_id;
-        isPopup.value = true;
-    } catch (error){
-        console.error('Hiba történt a lekérés közben: ',error);
-    }
-};
-const closePopup = () => {
-    isPopup.value = false;
-};
-watch(status,(newVal) => {
-    if(status.value < 2){
-        router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:selectedApplicant.value.user_id,statusId:2}));
-        status.value = 2;
-    }else{
-        updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
-    }
-});
 </script>
 
 <template>
-    <Head title="Munka szerkesztés"></Head>
-    <AuthenticatedLayout>
-        <div class="flex ">
-            <section class="dark:text-white w-full">
-            <form
-            @submit.prevent="form.post(route('cprofile.save.job'),{
-                onSuccess: () => {
-                    location.reload();
+    <section>
+        <header>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                Munka meghírdetése
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                Update your account's profile information and email address.
+            </p>
+        </header>
+        <form
+            @submit.prevent="form.post(route('cprofile.create.job'),{
+                onFinish: () => {
+                    form.reset();
                 }})"
             class="mt-6 space-y-6"
         >
@@ -235,15 +168,8 @@ watch(status,(newVal) => {
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
             <div>
-                <InputLabel for="active" value="active" />
-
-                <Checkbox v-model:checked="activeCheckbox" :id="activeCheckbox"></Checkbox>
-
-                <InputError class="mt-2" :message="form.errors.active" />
-            </div>
-            <div>
                 <InputLabel for="address" value="address" />
-                ss: {{ computeAddress }}
+
                 <TextInput
                     id="zip_address"
                     type="text"
@@ -340,7 +266,7 @@ watch(status,(newVal) => {
             <div>
                 <InputLabel for="description" value="description" />
 
-                <textarea name="description" id="description" v-model="form.description" placeholder="Munka leírása" class="w-full dark:bg-black" required></textarea>
+                <textarea name="description" id="description" v-model="form.description" placeholder="Munka leírása" class="w-full" required></textarea>
 
                 <InputError class="mt-2" :message="form.errors.description" />
             </div>
@@ -348,7 +274,7 @@ watch(status,(newVal) => {
             <div>
                 <InputLabel for="requirements" value="requirements" />
 
-                <textarea name="requirements" id="requirements" v-model="form.requirements" placeholder="Elvárások" class="w-full dark:bg-black" required></textarea>
+                <textarea name="requirements" id="requirements" v-model="form.requirements" placeholder="Elvárások" class="w-full" required></textarea>
 
                 <InputError class="mt-2" :message="form.errors.requirements" />
             </div>
@@ -356,7 +282,7 @@ watch(status,(newVal) => {
             <div>
                 <InputLabel for="payment" value="payment" />
 
-                <textarea name="payment" id="payment" v-model="form.payment" placeholder="Fizetés" class="w-full dark:bg-black"></textarea>
+                <input type="number" name="payment" id="payment" v-model="form.payment" placeholder="0"> Ft
 
                 <InputError class="mt-2" :message="form.errors.payment" />
             </div>
@@ -400,53 +326,5 @@ watch(status,(newVal) => {
                 </Transition>
             </div>
         </form>
-        </section>
-        <section class="w-full dark:text-white">
-            Jelentkező(k)
-            <div v-for="apps in applications">
-                {{ apps }}
-                <button @click="showPopUp(apps.user_id)">Megtekintem</button>
-            </div>
-            <Transition>
-                <div v-if="isPopup" class="popup">
-                    <button @click="closePopup()">X</button>
-                    <div>
-                        {{ selectedApplicant.name }}
-                    </div>
-                    <div>
-                        {{ selectedApplicant.email }}
-                    </div>
-                    <div>
-                        {{ selectedApplicant.phone }}
-                    </div>
-                    <template v-for="(sts, index) in statuses" :key="sts.id">
-                        <div v-if="sts.name !== 'Jelentkezett'">
-                            <label :for="sts.id">{{ sts.name }}</label>
-                            <input type="radio" v-model="status" :id="sts.name" :name="sts.name" :value="sts.id" :disabled="index < status.valueOf()">
-                        </div>
-                    </template>
-                </div>
-            </Transition>
-        </section>
-        </div>
-    </AuthenticatedLayout>
+    </section>
 </template>
-<style>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-.popup{
-	position: fixed;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
-	background: blue;
-	padding: 1em;
-}
-</style>

@@ -188,6 +188,7 @@ const showPopUp = async (applicantId) => {
     try{
         const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
         selectedApplicant.value = response.data.applicant;
+        console.log(response.data.applicant.status_id);
         status.value = response.data.applicant.status_id;
         isPopup.value = true;
     } catch (error){

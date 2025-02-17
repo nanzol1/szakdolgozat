@@ -182,14 +182,16 @@ onMounted(() => {
 });
 const updateStatus = async (id,applicantId,statusId) => {
     await router.put(route('cprofile.job.updatestatus',{id:id,jelentkezoId:applicantId,statusId:statusId}));
-    status.value = statusId;
 };
 const showPopUp = async (applicantId) => {
     try{
         const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
+        if(response.data.applicant.status_id < 2){
+            await router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:applicantId,statusId:2}));
+        }
         selectedApplicant.value = response.data.applicant;
-        status.value = response.data.applicant.status_id;
         isPopup.value = true;
+        status.value = response.data.applicant.status_id;
     } catch (error){
         console.error('Hiba történt a lekérés közben: ',error);
     }
@@ -198,12 +200,8 @@ const closePopup = () => {
     isPopup.value = false;
 };
 watch(status,(newVal) => {
-    if(status.value < 2){
-        router.put(route('cprofile.job.updatestatus',{id:props.job.id,jelentkezoId:selectedApplicant.value.user_id,statusId:2}));
-        status.value = 2;
-    }else{
-        updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
-    }
+    console.log(status.value);
+    //updateStatus(props.job.id,selectedApplicant.value.user_id,newVal);
 });
 </script>
 
@@ -419,11 +417,10 @@ watch(status,(newVal) => {
                     <div>
                         {{ selectedApplicant.phone }}
                     </div>
-                    <template v-for="(sts, index) in statuses" :key="sts.id">
-                        <div v-if="sts.name !== 'Jelentkezett'">
-                            <label :for="sts.id">{{ sts.name }}</label>
-                            <input type="radio" v-model="status" :id="sts.name" :name="sts.name" :value="sts.id" :disabled="index < status.valueOf()">
-                        </div>
+                    {{ status }}
+                    <template v-for="sts in statuses" :key="sts.id">
+                        <label :for="sts.id">{{ sts.name }}</label>
+                        <input type="radio" v-model="status" :id="sts.name" :name="sts.name" :value="sts.id">
                     </template>
                 </div>
             </Transition>

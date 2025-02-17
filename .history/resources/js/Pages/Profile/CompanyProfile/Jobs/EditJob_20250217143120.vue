@@ -188,7 +188,7 @@ const showPopUp = async (applicantId) => {
     try{
         const response = await axios.get(route('cprofile.job.applicant',{id:props.job.id,jelentkezoId:applicantId}));
         selectedApplicant.value = response.data.applicant;
-        status.value = response.data.applicant.status_id;
+        status.value = 2;
         isPopup.value = true;
     } catch (error){
         console.error('Hiba történt a lekérés közben: ',error);

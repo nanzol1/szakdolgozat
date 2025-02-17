@@ -34,12 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/cvmaker',[CVController::class,'index'])->name('profile.cv.show');
     Route::post('profile/cvmaker/store',[CVController::class,'store'])->name('profile.cv.store');
     Route::get('profile/cv/{id}/pdf',[CVController::class,'generatePdf'])->name('profile.cv.pdf');
-    Route::post('profile/uploadPhoto',[ProfileController::class,'uploadProfilePicture'])->name('profile.save.photo');
 
     Route::get('/munkak',[JobsController::class,'index'])->name('jobs.show');
     Route::get('/munka/{id}',[JobsController::class,'jobView'])->name('jobs.view');
-    Route::post('/munka/{id}/apply',[JobsController::class,'applyForJob'])->name('jobs.apply');
-    Route::post('/munka/{id}/apply-revoke',[JobsController::class,'revokeApplication'])->name('jobs.apply.revoke');
 });
 
 Route::middleware('auth:company')->group(function () {
@@ -55,6 +52,9 @@ Route::middleware('auth:company')->group(function () {
     Route::get('company-profile/munka/{id}/jelentkezo/{jelentkezoId}',[JobsController::class,'showApplicant'])->name('cprofile.job.applicant');
     Route::put('company-profile/munka/{id}/jelentkezo/{jelentkezoId}/updateStatus/{statusId}',[JobsController::class,'updateStatus'])->name('cprofile.job.updatestatus');
 });
+
+Route::post('/munka/{id}/apply',[JobsController::class,'applyForJob'])->name('jobs.apply');
+Route::post('/munka/{id}/apply-revoke',[JobsController::class,'revokeApplication'])->name('jobs.apply.revoke');
 
 
 

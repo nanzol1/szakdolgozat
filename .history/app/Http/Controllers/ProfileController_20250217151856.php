@@ -157,7 +157,7 @@ class ProfileController extends Controller
             $validated = Validator::make($data, [
                 'profile_photo' => 'required|image',
             ])->validate();
-
+            dd($validated);
             if($validated){
                 $image = $request->file('profile_photo');
                 $image->store('uploads/profile_picture/'.$request->user()->id, 'public');

@@ -7,7 +7,6 @@ import { Head, Link } from '@inertiajs/vue3';
 import UpdateProfileInterestsForm from './Partials/UpdateProfileInterestsForm.vue';
 import UpdateProfileMoreInformationForm from './Partials/UpdateProfileMoreInformationForm.vue';
 import UpdateIntroductionForm from './Partials/UpdateIntroductionForm.vue';
-import UpdateProfilePicture from './Partials/UpdateProfilePicture.vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -48,14 +47,6 @@ defineProps({
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                <div
-                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800  flex flex-row gap-[2em]"
-                >
-                    <UpdateProfilePicture
-                        class="max-w-xl"
-                    />
-                </div>
-
                 <div
                     class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800  flex flex-row gap-[2em]"
                 >

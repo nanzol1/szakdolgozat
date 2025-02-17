@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/cvmaker',[CVController::class,'index'])->name('profile.cv.show');
     Route::post('profile/cvmaker/store',[CVController::class,'store'])->name('profile.cv.store');
     Route::get('profile/cv/{id}/pdf',[CVController::class,'generatePdf'])->name('profile.cv.pdf');
-    Route::post('profile/uploadPhoto',[ProfileController::class,'uploadProfilePicture'])->name('profile.save.photo');
+    Route::get('profile/cv/{id}/pdf',[CVController::class,'generatePdf'])->name('profile.save.photo');
 
     Route::get('/munkak',[JobsController::class,'index'])->name('jobs.show');
     Route::get('/munka/{id}',[JobsController::class,'jobView'])->name('jobs.view');

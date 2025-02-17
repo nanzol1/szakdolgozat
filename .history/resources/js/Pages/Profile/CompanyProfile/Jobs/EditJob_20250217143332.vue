@@ -356,7 +356,7 @@ watch(status,(newVal) => {
             <div>
                 <InputLabel for="payment" value="payment" />
 
-                <input type="number" name="payment" id="payment" v-model="form.payment" placeholder="0" class="w-full dark:bg-black">
+                <input type="number" name="payment" id="payment" v-model="form.payment" placeholder="0" class="w-full">
 
                 <InputError class="mt-2" :message="form.errors.payment" />
             </div>

@@ -152,14 +152,15 @@ class ProfileController extends Controller
     }
 
     public function uploadProfilePicture(Request $request){
-        $data = $request->all();
+        dd($request->hasFile('profile_photo'));
         if($request->hasFile('profile_photo')){
-            $validated = Validator::make($data, [
-                'profile_photo' => 'required|image',
+            dd('asd');
+            $validated = Validator::make($request->profile_photo, [
+                'profile_photo_path' => 'required|image',
             ])->validate();
-
+            dd($validated);
             if($validated){
-                $image = $request->file('profile_photo');
+                
                 $image->store('uploads/profile_picture/'.$request->user()->id, 'public');
 
                 $request->user()->update(['profile_photo_path' => $image->hashName()]);

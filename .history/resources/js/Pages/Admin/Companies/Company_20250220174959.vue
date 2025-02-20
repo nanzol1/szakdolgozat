@@ -49,9 +49,6 @@ const setStatus = () => {
                     <div>
                         <button label="Show" @click="visible = true">Jelszó alaphelyzetbe</button>
                     </div>
-                    <div>
-                        <button @click="setStatus">Fiók inaktiválása</button>
-                    </div>
                 </template>
                 <div class="mt-5">
                     Meghirdetett munkák

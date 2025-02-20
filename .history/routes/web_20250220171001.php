@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\CompanyController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\CVController;
@@ -64,20 +63,15 @@ Route::get('admin/login',[AdminLoginController::class,'index'])->name('admin.log
 
 Route::middleware(['admin'])->group(function () {
     Route::get('admin/dashboard',[AdminLoginController::class,'dashboard'])->name('admin.dashboard');
-
-    Route::get('admin/users',[UserController::class,'getUsers'])->name('admin.users.show');
-    Route::get('admin/users/results',[UserController::class,'getUsers'])->name('admin.users.search'); 
-    Route::get('admin/user/{id}',[UserController::class,'showUser'])->name('admin.user.show');
-    Route::patch('admin/user/{id}/setStatus',[UserController::class,'setStatus'])->name('admin.user.setstatus');
-    Route::post('{id}/randomPassword',[UserController::class,'generateRandomPassword'])->name('admin.user.randompassword');
+    Route::get('admin/users',[AdminLoginController::class,'getUsers'])->name('admin.users.show');
+    Route::get('admin/users/results',[AdminLoginController::class,'getUsers'])->name('admin.users.search'); 
+    Route::get('admin/user/{id}',[AdminLoginController::class,'showUser'])->name('admin.user.show');
+    Route::post('{id}/randomPassword',[AdminLoginController::class,'generateRandomPassword'])->name('admin.user.randompassword');
 
     Route::get('admin/companies',[CompanyController::class,'getCompanies'])->name('admin.companies.show');
     Route::get('admin/companies/results',[CompanyController::class,'getCompanies'])->name('admin.companies.search'); 
     Route::get('admin/company/{id}',[CompanyController::class,'showCompany'])->name('admin.company.show');
     Route::post('{id}/randomPassword',[CompanyController::class,'generateRandomPasswordCompany'])->name('admin.company.randompassword');
-    Route::patch('admin/company/{id}/setStatus',[CompanyController::class,'setStatus'])->name('admin.company.setstatus');
-
-    
 });
 
 

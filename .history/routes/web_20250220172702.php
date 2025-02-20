@@ -68,14 +68,13 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/users',[UserController::class,'getUsers'])->name('admin.users.show');
     Route::get('admin/users/results',[UserController::class,'getUsers'])->name('admin.users.search'); 
     Route::get('admin/user/{id}',[UserController::class,'showUser'])->name('admin.user.show');
-    Route::patch('admin/user/{id}/setStatus',[UserController::class,'setStatus'])->name('admin.user.setstatus');
+    Route::patch('admin/user/{id}/setStatus',[UserController::class,'generateRandomPasswordCompany'])->name('admin.company.randompassword');
     Route::post('{id}/randomPassword',[UserController::class,'generateRandomPassword'])->name('admin.user.randompassword');
 
     Route::get('admin/companies',[CompanyController::class,'getCompanies'])->name('admin.companies.show');
     Route::get('admin/companies/results',[CompanyController::class,'getCompanies'])->name('admin.companies.search'); 
     Route::get('admin/company/{id}',[CompanyController::class,'showCompany'])->name('admin.company.show');
     Route::post('{id}/randomPassword',[CompanyController::class,'generateRandomPasswordCompany'])->name('admin.company.randompassword');
-    Route::patch('admin/company/{id}/setStatus',[CompanyController::class,'setStatus'])->name('admin.company.setstatus');
 
     
 });

@@ -1,16 +1,17 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import axios from 'axios';
 import Dialog from 'primevue/dialog';
 import { ref } from 'vue';
 
 const props = defineProps({
-    company:{
+    user:{
         type:Array,
     },
-    advertised_jobs:{
-        type:Array,
-    },
+    appliactions:{
+        type:Object,
+    }
 });
 
 const visible = ref(false);
@@ -19,10 +20,11 @@ const selectedJob = ref([]);
 
 const resetPassword = () => {
     visible.value = false;
-    router.post(route('admin.company.randompassword',{id:props.company[0].id}));
-}
+    router.post(route('admin.user.randompassword',{id:props.user[0].id}));
+};
+
 const showSelectedJob = (id) => {
-    props.advertised_jobs.forEach(element => {
+    props.appliactions.forEach(element => {
         if(element.id === id){
             selectedJob.value = element;
             isPopup.value = true;
@@ -30,9 +32,9 @@ const showSelectedJob = (id) => {
     });
 };
 const setStatus = () => {
-    axios.patch(route('admin.company.setstatus',{id:props.company[0].id}),
+    axios.patch(route('admin.user.setstatus',{id:props.user[0].id}),
     {}).then((result) => {
-        console.log(result.data);
+        console.log(result);
     }).catch((err) => {
         console.error(err);
     });
@@ -42,7 +44,7 @@ const setStatus = () => {
     <Head title="Munkavállaló"></Head>
     <AdminLayout>
             <div class="dark:text-white">
-                <template v-for="data in company" :key="data.id">
+                <template v-for="data in user">
                     <div class="mb-3">
                         {{ data }}
                     </div>
@@ -53,25 +55,26 @@ const setStatus = () => {
                         <button @click="setStatus">Fiók inaktiválása</button>
                     </div>
                 </template>
+
                 <div class="mt-5">
-                    Meghirdetett munkák
+                    Munkákra jelentkezett
                 </div>
-                <template v-for="jobs in advertised_jobs" :key="jobs.id">
-                    <div v-if="jobs">
-                        {{ jobs }}
-                        <button @click="showSelectedJob(jobs.id)">Megtekintem</button>
+                <template v-for="apps in appliactions">
+                    <div class="mb-3">
+                        {{ apps }}
+                        <button @click="showSelectedJob(apps.id)">Megtekint</button>
                     </div>
                 </template>
 
                 <Dialog v-model:visible="isPopup" modal header="Munka adatai" :style="{ width: '25rem', background: 'white' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
                     <div class="flex justify-start gap-2 mb-3">
                         <div>
-                            {{ selectedJob.id }} | {{ selectedJob.active }} | {{ selectedJob.name }} | {{ selectedJob.address }}
+                            {{ selectedJob.id }} | {{ selectedJob.job_id }} | {{ selectedJob.active }} | {{ selectedJob.status }}
                         </div>
                     </div>
                     <div class="flex justify-start gap-2 mb-3">
                         <div>
-                            {{ selectedJob.description }} | {{ selectedJob.requirements }} | {{ selectedJob.payment }}
+                            {{ selectedJob.job_name }} | <Link :href="route('admin.company.show',{id:selectedJob.job_createdby})">{{ selectedJob.job_createdby }}</Link>
                         </div>
                     </div>
                 </Dialog>
@@ -80,7 +83,7 @@ const setStatus = () => {
                     <span class="text-surface-500 dark:text-surface-400 block mb-3">Biztosan alaphelyeztbe állítod?.</span>
                     <div class="flex justify-center gap-2 mb-3">
                         <div>
-                            Alaphelyzetbe fog kerülni a <span style="text-decoration: underline">{{ props.company[0].name }}</span> jelszava!
+                            Alaphelyzetbe fog kerülni a <span style="text-decoration: underline">{{ props.user[0].name }}</span> jelszava!
                         </div>
                     </div>
                     <div class="flex justify-end gap-2">

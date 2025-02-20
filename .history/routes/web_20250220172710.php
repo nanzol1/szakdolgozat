@@ -75,7 +75,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/companies/results',[CompanyController::class,'getCompanies'])->name('admin.companies.search'); 
     Route::get('admin/company/{id}',[CompanyController::class,'showCompany'])->name('admin.company.show');
     Route::post('{id}/randomPassword',[CompanyController::class,'generateRandomPasswordCompany'])->name('admin.company.randompassword');
-    Route::patch('admin/company/{id}/setStatus',[CompanyController::class,'setStatus'])->name('admin.company.setstatus');
 
     
 });

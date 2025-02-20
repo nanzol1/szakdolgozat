@@ -29,14 +29,6 @@ const showSelectedJob = (id) => {
         }
     });
 };
-const setStatus = () => {
-    axios.patch(route('admin.company.setstatus',{id:props.company[0].id}),
-    {}).then((result) => {
-        console.log(result.data);
-    }).catch((err) => {
-        console.error(err);
-    });
-};
 </script>
 <template>
     <Head title="Munkavállaló"></Head>
@@ -48,9 +40,6 @@ const setStatus = () => {
                     </div>
                     <div>
                         <button label="Show" @click="visible = true">Jelszó alaphelyzetbe</button>
-                    </div>
-                    <div>
-                        <button @click="setStatus">Fiók inaktiválása</button>
                     </div>
                 </template>
                 <div class="mt-5">

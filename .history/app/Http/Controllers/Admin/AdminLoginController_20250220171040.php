@@ -7,7 +7,11 @@ use App\Models\Application;
 use App\Models\Company;
 use App\Models\JobVacancy;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Str;
 
 
 class AdminLoginController extends Controller{

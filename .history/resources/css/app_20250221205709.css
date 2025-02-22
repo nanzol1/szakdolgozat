@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+
+}
+
+.navbar{
+    transition: all 0.3s ease;
+}
+.fixed-nav{
+    position: sticky;
+    top: 5px;
+    z-index: 2;
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+
+@media (min-width:991px) and (max-width:1199px) {
+    .p-menubar-item-link{
+        padding-left: .5rem !important;
+        padding-right: .5rem !important;
+    }
+}

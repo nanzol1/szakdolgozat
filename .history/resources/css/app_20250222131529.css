@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+
+}
+
+.navbar{
+    transition: all 0.3s ease;
+}
+.fixed-nav{
+    position: sticky;
+    top: 5px;
+    z-index: 2;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+.custom-select{
+    background-color: rgba(100, 100, 100, 0.915) !important;
+}
+.v-slide-group__next{
+    color: black !important;
+    fill: black !important;
+}
+
+@media (min-width:991px) and (max-width:1199px) {
+    .p-menubar-item-link{
+        padding-left: .1rem !important;
+        padding-right: .1rem !important;
+    }
+}

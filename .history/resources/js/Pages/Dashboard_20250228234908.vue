@@ -19,6 +19,7 @@ const states = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wy
                 Dashboard
             </h2>
         </template>
+        {{ $page.props }}
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div

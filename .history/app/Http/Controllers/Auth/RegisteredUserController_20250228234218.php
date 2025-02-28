@@ -81,7 +81,7 @@ class RegisteredUserController extends Controller
             event(new Registered($company));
             Auth::login($company);
 
-            return redirect()->intended(route('dashboard',absolute:false))->with('success','Sikeres regisztráció!');
+            return redirect()->route('dashboard')->with('success','Sikeres regisztráció!');
         }
         return redirect()->route('register')->with('error','Sikertelen regisztráció!');
     }

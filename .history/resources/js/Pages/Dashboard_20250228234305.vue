@@ -19,6 +19,7 @@ const states = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wy
                 Dashboard
             </h2>
         </template>
+        {{ $page.props }}
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
@@ -26,6 +27,17 @@ const states = ref(['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wy
                 >
                     <div class="p-6 text-gray-900 dark:text-gray-100 vuetify-container">
                         You're logged in!
+
+                        <v-container class="vuetify-container">
+
+                            <v-combobox
+            label="Combobox"
+            :items="states"
+            v-model="asd"
+        ></v-combobox>
+
+                        </v-container>
+
                     </div>
                 </div>
             </div>

@@ -1,0 +1,135 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link } from '@inertiajs/vue3';
+import UpdateProfileMoreInformationForm from './Partials/UpdateProfileMoreInformationForm.vue';
+import { ref } from 'vue';
+
+const props = defineProps({
+    mustVerifyEmail: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
+    category: {
+        type: Object,
+    },
+    jobs_interests:{
+        type:Array,
+    },
+    query:{
+        type:String,
+    },
+    institutions:{
+        type:Array,
+    },
+    educations:{
+        type:Object,
+    }
+});
+
+const newEducation = ref(false);
+const selectedEducation = ref(null);
+const vDialog = ref(false);
+const cardRef = ref(null);
+
+const handleSelection = (id) => {
+    selectedEducation.value = Object.values(props.educations)?.filter(e => e.id === id);
+    vDialog.value = true;
+};
+</script>
+
+<template>
+    <AuthenticatedLayout>
+    <Head title="Profil - Képzettségek" />
+    <v-container fluid class="bg-white px-0 mx-0">
+        <v-container class="!max-w-7xl mx-auto">
+            <v-row>
+                <v-col>
+                    <h2
+                        class="text-xl font-semibold leading-tight text-gray-800"
+                    >
+                        Profilom / Képzettségek
+                    </h2>
+                    <h3 class="text-lg font-semibold leading-tight text-gray-800 mt-1">Ezen az oldalon tudja megtekinteni és szerkeszteni profilját.</h3>
+                    <div class="flex gap-3 md:gap-5 text-md mt-3">
+                        <Link :href="route('profile.edit')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url === '/profile'}]">Alap adataim</Link>
+                        <Link :href="route('profile.edit.interests')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('/erdekeltsegeim')}]">Érdekeltségeim</Link>
+                        <Link :href="route('profile.edit.educations')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('/kepzettsegek')}]">Képzettségek</Link>
+                    </div>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-container>
+    <div class="max-w-7xl mx-auto">
+        <v-container>
+            <v-row>
+                <v-col cols="12">
+                    <v-btn @click="newEducation = !newEducation" class="hover:bg-sky-500 hover:text-gray-50 mb-3" append-icon="mdi mdi-plus-circle-outline">Új végzettség felvétele</v-btn>
+                    <v-expand-transition>
+                        <div
+                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 flex flex-row gap-[2em]"
+                            v-if="newEducation"
+                        >
+                            <UpdateProfileMoreInformationForm :educations="educations"/>
+                        </div>
+                    </v-expand-transition>
+                </v-col>
+                ss {{ selectedEducation }}
+                <v-col cols="12" v-for="educ in educations" :key="educ.id">
+                        <v-card
+                          class="mx-auto"
+                          width="100%"
+                          append-icon="mdi mdi-file-edit-outline"
+                          @click="handleSelection(educ.id)"
+                        >
+                          <template v-slot:title>
+                            <span class="font-weight-black">{{ educ.institution_name }}</span>
+                          </template>
+                          <template v-slot:subtitle>
+                            <span class="font-weight-black">{{ educ.education_type }}</span>
+                          </template>
+                      
+                          <v-card-text class="bg-surface-light pt-4">
+                            {{ educ.education_name }}
+                          </v-card-text>
+                        </v-card>
+                        <v-dialog max-width="500">
+        <template v-slot:activator="{ props: activatorProps }">
+          <v-btn
+            v-bind="activatorProps"
+            color="surface-variant"
+            text="Open Dialog"
+            variant="flat"
+          ></v-btn>
+        </template>
+    
+        <template v-slot:default="{ isActive }">
+          <v-card title="Dialog">
+            <v-card-text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </v-card-text>
+        
+            <v-card-actions>
+              <v-spacer></v-spacer>
+            
+              <v-btn
+                text="Close Dialog"
+                @click="isActive.value = false"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+    </v-dialog>
+                </v-col>
+            </v-row>
+        </v-container>
+        asd
+    </div>
+    </AuthenticatedLayout>
+</template>
+<style>
+    html{
+        scroll-behavior: smooth;
+    }
+</style>

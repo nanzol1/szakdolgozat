@@ -61,7 +61,7 @@ isCompany.value = window.sessionData.is_company;
                                     :href="route('cprofile.edit.jobs')"
                                     :class="['text-stone-950 hover:text-gray-50',{'!text-gray-50':$page.url.includes('/hirdetes')}]"
                                 >
-                                    Munkahirdetés
+                                    Munka hirdetés
                                 </Link>
                                 <Link
                                     :href="route('cprofile.myjobs')"
@@ -90,7 +90,7 @@ isCompany.value = window.sessionData.is_company;
                                     <v-list>
                                       <v-list-item>
                                         <v-list-item-title>
-                                            <v-menu open-on-hover v-if="$page.props.auth.company.is_company === 0">
+                                            <v-menu open-on-hover>
                                                 <template v-slot:activator="{props}">
                                                     <Link :href="route('profile.edit')" v-bind="props" class="hover:text-sky-500">Profilom
                                                         <v-icon icon="mdi mdi-arrow-down-drop-circle" class="ml-1" size="x-small"></v-icon>
@@ -110,30 +110,6 @@ isCompany.value = window.sessionData.is_company;
                                                     <v-list-item>
                                                         <v-list-item-title>
                                                             <Link :href="route('profile.edit.educations')" class="hover:text-sky-500">Képzettségek</Link>
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                </v-list>
-                                            </v-menu>
-                                            <v-menu open-on-hover v-else>
-                                                <template v-slot:activator="{props}">
-                                                    <Link :href="route('cprofile.edit')" v-bind="props" class="hover:text-sky-500">Profilom
-                                                        <v-icon icon="mdi mdi-arrow-down-drop-circle" class="ml-1" size="x-small"></v-icon>
-                                                    </Link>
-                                                </template>
-                                                <v-list>
-                                                    <v-list-item>
-                                                        <v-list-item-title>
-                                                            <Link :href="route('cprofile.edit')" class="hover:text-sky-500">Alap adatok</Link>
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                    <v-list-item>
-                                                        <v-list-item-title>
-                                                            <Link :href="route('cprofile.edit.jobs')" class="hover:text-sky-500">Munkahirdetés</Link>
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                    <v-list-item>
-                                                        <v-list-item-title>
-                                                            <Link :href="route('cprofile.myjobs')" class="hover:text-sky-500">Munkáim</Link>
                                                         </v-list-item-title>
                                                     </v-list-item>
                                                 </v-list>

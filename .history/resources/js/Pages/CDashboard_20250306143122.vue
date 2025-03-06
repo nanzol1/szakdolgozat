@@ -37,7 +37,7 @@ const props = defineProps({
                 <v-col cols="12" lg="6">
                     <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100 vuetify-container">
-                            Összesen meghirdetett munka: {{ jobs_count }} / Összes jelentkező a munkákra: {{ sum_applicants }}
+                            {{ jobs_count }} / {{ sum_applicants }}
                         </div>
                     </div>
                 </v-col>

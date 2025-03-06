@@ -44,9 +44,8 @@ onMounted(() => {
 </script>
 
 <template>
-
     <AuthenticatedLayout>
-        <Head title="Jelentkezők"></Head>
+    <Head title="Munkahirdetes" />
         <v-container fluid class="bg-white px-0 mx-0">
             <v-container class="!max-w-7xl mx-auto">
                 <v-row>
@@ -71,26 +70,12 @@ onMounted(() => {
             <v-container>
                 <v-row>
                     <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdateProfileInformationForm
-                                class="max-w-xl"
-                            />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdatePasswordForm class="max-w-xl" />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <DeleteUserForm class="max-w-xl" />
+                        <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                                <div
+                                class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                                >
+                                <UpdateJobVacancies class="max-w-xl" :categories="categories"  :employment_types="employment_types" :work_schedules="work_schedules"/>
+                            </div>
                         </div>
                     </v-col>
                 </v-row>

@@ -167,7 +167,7 @@ const computeErrorEmployments = computed(() => {
                     <v-form
                         @submit.prevent="form.post(route('cprofile.create.job'),{
                             onSuccess: () => {
-                                form.reset();
+                                location.reload();
                             }})"
                         >
                             <v-row>

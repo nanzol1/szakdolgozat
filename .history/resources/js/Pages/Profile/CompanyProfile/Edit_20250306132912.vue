@@ -44,6 +44,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Profile" />
 
     <AuthenticatedLayout>
         <Head title="Jelentkezők"></Head>

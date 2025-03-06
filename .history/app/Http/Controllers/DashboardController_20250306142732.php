@@ -143,21 +143,14 @@ class DashboardController extends Controller{
         ->with('jobs_category','jobs_subcategory','schedules','employments_type')
         ->paginate(5);
         $jobs_stat = JobVacancy::where('created_by','=',$request->user()->id)
-        ->with('applicants','jobs_category','jobs_subcategory')->get()->toArray();
-        $applicantsSumCount = array_map(function($fun) {
-            return count($fun['applicants']);
-        },$jobs_stat);
-        $applicantsPerJob = array_map(function($fun) {
-            return [
-                'job_maincateg' => $fun['maincateg_id'],
-                'job_subcateg' => $fun['subcateg_id'],
-                'applicants' => count($fun['applicants']),
-            ];
-        },$jobs_stat);
+        ->with('applicants')->get()->toArray();
+        $jobsCount = array_filter($jobs_stat, function($fun) {
+            return count($fun);
+        });
+        dd($jobsCount);
         return Inertia::render('CDashboard',[
             'myjobs' => $myjobs,
-            'jobs_count' => count($jobs_stat),
-            'sum_applicants' => array_sum($applicantsSumCount),
+            'jobs_count' => $jobsCount,
         ]);
     }
 

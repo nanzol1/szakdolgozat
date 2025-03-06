@@ -61,7 +61,7 @@ isCompany.value = window.sessionData.is_company;
                                     :href="route('cprofile.edit.jobs')"
                                     :class="['text-stone-950 hover:text-gray-50',{'!text-gray-50':$page.url.includes('/hirdetes')}]"
                                 >
-                                    Munkahirdetés
+                                    Munka hirdetés
                                 </Link>
                                 <Link
                                     :href="route('cprofile.myjobs')"
@@ -133,7 +133,7 @@ isCompany.value = window.sessionData.is_company;
                                                     </v-list-item>
                                                     <v-list-item>
                                                         <v-list-item-title>
-                                                            <Link :href="route('cprofile.myjobs')" class="hover:text-sky-500">Munkáim</Link>
+                                                            <Link :href="route('profile.edit.educations')" class="hover:text-sky-500">Képzettségek</Link>
                                                         </v-list-item-title>
                                                     </v-list-item>
                                                 </v-list>

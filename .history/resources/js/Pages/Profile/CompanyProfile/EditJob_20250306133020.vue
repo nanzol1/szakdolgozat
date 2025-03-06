@@ -8,8 +8,14 @@ import UpdateJobVacancies from './Partials/UpdateJobVacancies.vue';
 import { computed, onMounted, ref } from 'vue';
 
 defineProps({
+    mustVerifyEmail: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
     categories:{
-        type:Object,
+        type:Array,
     },
     employment_types:{
         type:Object,
@@ -38,27 +44,20 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Profile" />
+
     <AuthenticatedLayout>
-    <Head title="Munkahirdetes" />
-        <v-container fluid class="bg-white px-0 mx-0">
-            <v-container class="!max-w-7xl mx-auto">
-                <v-row>
-                    <v-col>
-                        <h2
-                            class="text-xl font-semibold leading-tight text-gray-800"
-                        >
-                            Munka / Munkahirdetés feladás
-                        </h2>
-                        <h3 class="text-lg font-semibold leading-tight text-gray-800 mt-1">Ezen az oldalon tudja megtekinteni és szerkeszteni profilját.</h3>
-                        <div class="flex gap-3 md:gap-5 text-md mt-3">
-                            <Link :href="route('cprofile.edit')" :class="['hover:text-sky-500 transition']">Alap adataim</Link>
-                            <Link :href="route('cprofile.edit.jobs')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('hirdetes')}]">Munka hirdetés</Link>
-                            <Link :href="route('cprofile.myjobs')" :class="['hover:text-sky-500 transition']">Munkáim</Link>
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-container>
+        <template #header>
+            <h2
+                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+            >
+                Profile
+            </h2>
+            <Link :href="route('cprofile.myjobs')" class="dark:text-white">Hirdetett munkák</Link>
+            <div>
+                Az elmúlt {{ notifications }} órában új jelentkezők érkeztek
+            </div>
+        </template>
 
         <div class="py-12 max-w-7xl mx-auto">
             <v-container>

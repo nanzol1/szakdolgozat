@@ -154,6 +154,7 @@ class DashboardController extends Controller{
                 'applicants' => count($fun['applicants']),
             ];
         },$jobs_stat);
+        dd($applicantsPerJob);
         return Inertia::render('CDashboard',[
             'myjobs' => $myjobs,
             'jobs_count' => count($jobs_stat),

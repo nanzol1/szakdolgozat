@@ -44,6 +44,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Profile" />
 
     <AuthenticatedLayout>
         <Head title="Jelentkezők"></Head>
@@ -59,8 +60,8 @@ onMounted(() => {
                         <h3 class="text-lg font-semibold leading-tight text-gray-800 mt-1">Ezen az oldalon tudja megtekinteni és szerkeszteni profilját.</h3>
                         <div class="flex gap-3 md:gap-5 text-md mt-3">
                             <Link :href="route('cprofile.edit')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('company-profile')}]">Alap adataim</Link>
-                            <Link :href="route('cprofile.edit.jobs')" class="hover:text-sky-500 transition">Munka hirdetés</Link>
-                            <Link :href="route('cprofile.myjobs')" :class="['hover:text-sky-500 transition']">Munkáim</Link>
+                            <Link :href="route('cprofile.create.job')" class="hover:text-sky-500 transition">Munka hirdetés</Link>
+                            <Link :href="route('cprofile.edit.jobs')" :class="['hover:text-sky-500 transition']">Munkáim</Link>
                         </div>
                     </v-col>
                 </v-row>

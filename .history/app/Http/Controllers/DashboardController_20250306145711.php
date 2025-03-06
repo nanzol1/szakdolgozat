@@ -149,11 +149,13 @@ class DashboardController extends Controller{
         },$jobs_stat);
         $applicantsPerJob = array_map(function($fun) {
             return [
-                'job_maincateg' => $fun['maincateg_id'],
-                'job_subcateg' => $fun['subcateg_id'],
+                'fun' => $fun,
+                'job_maincateg' => $fun['jobs_category']['id'],
+                'job_subcateg' => $fun['jobs_subcategory']['id'],
                 'applicants' => count($fun['applicants']),
             ];
         },$jobs_stat);
+        dd($applicantsPerJob);
         return Inertia::render('CDashboard',[
             'myjobs' => $myjobs,
             'jobs_count' => count($jobs_stat),

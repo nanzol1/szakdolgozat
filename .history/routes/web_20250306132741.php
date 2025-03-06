@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth:company')->group(function () {
     Route::get('/company-profile', [CompanyProfileController::class, 'editCompany'])->name('cprofile.edit');
-    Route::get('/cmunka/hirdetes', [CompanyProfileController::class, 'newJobsIndex'])->name('cprofile.edit.jobs');
+    Route::get('/company-profile', [CompanyProfileController::class, 'newJobIndex'])->name('cprofile.edit.jobs');
     Route::post('/company-profile', [CompanyProfileController::class, 'update'])->name('cprofile.update');
     Route::post('/company-profile', [CompanyProfileController::class, 'destroy'])->name('cprofile.destroy');
     Route::post('/hirdetes/feladas', [CompanyProfileController::class, 'createJobs'])->name('cprofile.create.job');

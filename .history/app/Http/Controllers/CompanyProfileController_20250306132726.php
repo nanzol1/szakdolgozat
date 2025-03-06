@@ -55,6 +55,8 @@ class CompanyProfileController extends Controller{
             ];
         }
         return Inertia::render('Profile/CompanyProfile/EditJob', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
             'categories' => $categories,
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
@@ -167,8 +169,6 @@ class CompanyProfileController extends Controller{
                     $jobVacancy->work_schedules()->attach($validated['work_schedules']);
                 }
             }
-
-            return redirect()->back()->with('success','A munka sikeresen meghirdetésre került!');
         }
     }
 

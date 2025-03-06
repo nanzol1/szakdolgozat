@@ -167,8 +167,6 @@ class CompanyProfileController extends Controller{
                     $jobVacancy->work_schedules()->attach($validated['work_schedules']);
                 }
             }
-
-            return redirect()->back()->with('success','A munka sikeresen meghirdetésre került!');
         }
     }
 

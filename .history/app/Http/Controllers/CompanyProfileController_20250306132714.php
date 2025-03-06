@@ -41,7 +41,7 @@ class CompanyProfileController extends Controller{
         ]);
     }
 
-    public function newJobsIndex(Request $request)
+    public function indexNewJobs(Request $request)
     {
         $category = JobCategory::with('jobs_subcategories')->get();
         $categories = [];
@@ -54,7 +54,9 @@ class CompanyProfileController extends Controller{
                 'subcategories' => $item->jobs_subcategories->toArray() ?? [],
             ];
         }
-        return Inertia::render('Profile/CompanyProfile/EditJob', [
+        return Inertia::render('Profile/CompanyProfile/Edit', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
             'categories' => $categories,
             'employment_types' => $employment_types,
             'work_schedules' => $work_schedules,
@@ -167,8 +169,6 @@ class CompanyProfileController extends Controller{
                     $jobVacancy->work_schedules()->attach($validated['work_schedules']);
                 }
             }
-
-            return redirect()->back()->with('success','A munka sikeresen meghirdetésre került!');
         }
     }
 

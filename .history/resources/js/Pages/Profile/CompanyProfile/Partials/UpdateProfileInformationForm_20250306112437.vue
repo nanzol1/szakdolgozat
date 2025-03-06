@@ -16,7 +16,6 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
-const imagePreview = ref(null);
 
 const form = useForm({
     name: user.company_name,
@@ -136,7 +135,7 @@ const rules = {
                             </v-col>
                             <v-col cols="12">
                                 <div>
-                                    <v-file-input label="Cég profilkép" :error="!!form.errors.profile_picture"
+                                    <v-file-input label="Profilkép" :error="!!form.errors.profile_picture"
                                     :error-messages="form.errors.profile_picture" accept="image/png, image/jpeg, image/bmp" :rules="rules.fileRules" @change="renderImage" v-on:click:clear="renderImage"></v-file-input>
                                 </div>
                                 <v-expand-transition>

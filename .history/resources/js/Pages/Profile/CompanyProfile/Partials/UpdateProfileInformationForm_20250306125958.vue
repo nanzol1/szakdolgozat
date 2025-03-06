@@ -16,7 +16,7 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
-const imagePreview = ref(null);
+const imagePrview = ref(null);
 
 const form = useForm({
     name: user.company_name,

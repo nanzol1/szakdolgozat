@@ -23,7 +23,7 @@ const navigation = [
   { name: 'Hirdetésfeladás', href: route('register',{type:'munkaltato'}), current: page.url === '/hirdetes/feladas' ? true : false },
   { name: 'Bejelentkezés', href: route('login'), current: page.url === '/login' ? true : false,isVisible: page.props.auth.user === null && page.props.auth.company === null ? '' : 'hidden'},
   { name: 'Regisztráció', href: route('register',{type:''}), current: page.url === '/register' || page.url === '/register/munkavallalo' || page.url === '/register/munkaltato' ? true : false , isVisible: page.props.auth.user === null && page.props.auth.company === null ? '' : 'hidden'},
-  { name: 'Profilom', href: is_company.value === 1 ? route('cprofile.edit') : route('profile.edit'), current: page.url === '/profile' ? true : false,isVisible: page.props.auth.user === null && page.props.auth.company === null ? 'hidden' : ''},
+  { name: 'Profilom', href: is_company === 1 ? route('cprofile.edit') : route('profile.edit'), current: page.url === '/profile' ? true : false,isVisible: page.props.auth.user === null && page.props.auth.company === null ? 'hidden' : ''},
 ]
 onMounted(() => {
    window.addEventListener('scroll',handleScroll); 

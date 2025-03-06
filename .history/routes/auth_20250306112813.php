@@ -95,7 +95,7 @@ Route::middleware('auth:company')->group(function () {
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);*/
 
-    Route::put('cpassword', [PasswordController::class, 'update'])->name('cpassword.update');
+    Route::put('cpassword', [PasswordController::class, 'updateCompany'])->name('cpassword.update');
     Route::get('cprofile/employment',[CompanyProfileController::class,'getEmploymentsType'])->name('cprofile.employment.search'); 
     Route::get('cprofile/schedules',[CompanyProfileController::class,'getWorkSchedules'])->name('cprofile.schedules.search'); 
     Route::get('fetchNotifications',[CompanyProfileController::class,'getNofitications'])->name('cprofile.fetch.notifications'); 

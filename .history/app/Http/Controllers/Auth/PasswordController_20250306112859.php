@@ -27,7 +27,23 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('success','Sikeres jelszó módosítás!');
+        return back()->with('success','Sikeres jelszó módosítás!');
+    }
+    public function updateCompany(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ],[
+            'current_password.*' => 'Helytelen jelszó!',
+            'password.*' => 'Az új jelszó minimum 8 karakter kell legyen!',
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('success','Sikeres jelszó módosítás!');
     }
     
 }

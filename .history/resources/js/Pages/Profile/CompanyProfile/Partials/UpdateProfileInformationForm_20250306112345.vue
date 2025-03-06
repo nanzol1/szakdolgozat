@@ -16,7 +16,6 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
-const imagePreview = ref(null);
 
 const form = useForm({
     name: user.company_name,
@@ -103,7 +102,7 @@ const rules = {
                         </h2>
                     
                         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                            Ezen a fülön tudja szükség esetén frissíteni profil adatait
+                            Update your account's profile information and email address.
                         </p>
                     </header>
                 
@@ -115,19 +114,19 @@ const rules = {
                     >
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field type="text" label="Cégnév" v-model="form.name"
+                                <v-text-field type="text" v-model="form.name"
                                 :error="!!form.errors.name" :error-messages="form.errors.name"></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field type="email" label="E-mail cím" v-model="form.email"
+                                <v-text-field type="email" v-model="form.email"
                                 :error="!!form.errors.email" :error-messages="form.errors.email" disabled></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field type="text" label="Telefonszám" v-model="form.company_pnumber" :rules="rules.phoneRule"
+                                <v-text-field type="text" v-model="form.company_pnumber" :rules="rules.phoneRule"
                                 :error="!!form.errors.company_pnumber" :error-messages="form.errors.company_pnumber"></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field type="text" label="Teljes cím" v-model="form.company_address"
+                                <v-text-field type="text" v-model="form.company_address"
                                 :error="!!form.errors.company_address" :error-messages="form.errors.company_address"></v-text-field>
                             </v-col>
                             <v-col cols="12">
@@ -136,7 +135,7 @@ const rules = {
                             </v-col>
                             <v-col cols="12">
                                 <div>
-                                    <v-file-input label="Cég profilkép" :error="!!form.errors.profile_picture"
+                                    <v-file-input label="Profilkép" :error="!!form.errors.profile_picture"
                                     :error-messages="form.errors.profile_picture" accept="image/png, image/jpeg, image/bmp" :rules="rules.fileRules" @change="renderImage" v-on:click:clear="renderImage"></v-file-input>
                                 </div>
                                 <v-expand-transition>

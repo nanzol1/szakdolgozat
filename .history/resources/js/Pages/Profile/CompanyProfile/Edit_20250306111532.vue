@@ -59,43 +59,43 @@ onMounted(() => {
                         </h2>
                         <h3 class="text-lg font-semibold leading-tight text-gray-800 mt-1">Ezen az oldalon tudja megtekinteni és szerkeszteni profilját.</h3>
                         <div class="flex gap-3 md:gap-5 text-md mt-3">
-                            <Link :href="route('cprofile.edit')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('company-profile')}]">Alap adataim</Link>
+                            <Link :href="route('cprofile.edit')" :class="['hover:text-sky-500 transition']">Alap adataim</Link>
                             <Link :href="route('cprofile.create.job')" class="hover:text-sky-500 transition">Munka hirdetés</Link>
-                            <Link :href="route('cprofile.myjobs')" :class="['hover:text-sky-500 transition']">Munkáim</Link>
+                            <Link :href="route('cprofile.myjobs')" :class="['hover:text-sky-500 transition',{'text-sky-500':$page.url.includes('cmunka')}]">Munkáim</Link>
                         </div>
                     </v-col>
                 </v-row>
             </v-container>
         </v-container>
 
-        <div class="py-12 max-w-7xl mx-auto">
-            <v-container>
-                <v-row>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdateProfileInformationForm
-                                class="max-w-xl"
-                            />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdatePasswordForm class="max-w-xl" />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <DeleteUserForm class="max-w-xl" />
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-container>
+        <div class="py-12">
+            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
+                >
+                    <UpdateProfileInformationForm
+                        class="max-w-xl"
+                    />
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <UpdateJobVacancies class="max-w-xl" :categories="categories"  :employment_types="employment_types" :work_schedules="work_schedules"/>
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <UpdatePasswordForm class="max-w-xl" />
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <DeleteUserForm class="max-w-xl" />
+                </div>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

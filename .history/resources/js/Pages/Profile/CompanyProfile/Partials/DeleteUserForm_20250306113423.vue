@@ -19,7 +19,7 @@ const confirmUserDeletion = () => {
 };
 
 const deleteUser = () => {
-    form.post(route('cprofile.destroy'), {
+    form.post(route('profile.destroy'), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),

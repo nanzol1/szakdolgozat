@@ -1,8 +1,4 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -16,7 +12,7 @@ const form = useForm({
 });
 
 const updatePassword = () => {
-    form.put(route('cpassword.update'), {
+    form.put(route('password.update'), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -34,20 +30,19 @@ const updatePassword = () => {
 </script>
 
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="12">
-                <section>
-                    <header>
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                            Jelszó módosítása
-                        </h2>
-                    
-                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                            Mindig legyen biztos abban, hogy biztonságos jelszót választ magának!
-                        </p>
-                    </header>
-                
+    <section>
+        <header>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                Jelszó módosítás
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                A biztonság érdekében törekedjen arra, hogy biztonságos jelszót használjon.
+            </p>
+        </header>
+        <v-container>
+            <v-row>
+                <v-col cols="12">
                     <v-form @submit.prevent="updatePassword" class="mt-6 space-y-6">
                         <v-row>
                             <v-col cols="12">
@@ -72,8 +67,8 @@ const updatePassword = () => {
                             </v-col>
                         </v-row>
                     </v-form>
-                </section>
-            </v-col>
-        </v-row>
-    </v-container>
+                </v-col>
+            </v-row>
+        </v-container>
+    </section>
 </template>

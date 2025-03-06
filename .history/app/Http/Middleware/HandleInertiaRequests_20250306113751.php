@@ -45,7 +45,6 @@ class HandleInertiaRequests extends Middleware
                     'id' => Auth::guard('company')->user()->id,
                     'name' => Auth::guard('company')->user()->company_name,
                     'email' => Auth::guard('company')->user()->email,
-                    'is_company' => 1,
                 ] : null,
             ],
             'ziggy' => fn () => [

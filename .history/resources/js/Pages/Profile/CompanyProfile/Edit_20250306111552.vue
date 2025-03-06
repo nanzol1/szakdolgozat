@@ -68,34 +68,34 @@ onMounted(() => {
             </v-container>
         </v-container>
 
-        <div class="py-12 max-w-7xl mx-auto">
-            <v-container>
-                <v-row>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdateProfileInformationForm
-                                class="max-w-xl"
-                            />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <UpdatePasswordForm class="max-w-xl" />
-                        </div>
-                    </v-col>
-                    <v-col cols="12">
-                        <div
-                            class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
-                        >
-                            <DeleteUserForm class="max-w-xl" />
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-container>
+        <div class="py-12">
+            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex justify-between"
+                >
+                    <UpdateProfileInformationForm
+                        class="max-w-xl"
+                    />
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <UpdateJobVacancies class="max-w-xl" :categories="categories"  :employment_types="employment_types" :work_schedules="work_schedules"/>
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <UpdatePasswordForm class="max-w-xl" />
+                </div>
+
+                <div
+                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800"
+                >
+                    <DeleteUserForm class="max-w-xl" />
+                </div>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

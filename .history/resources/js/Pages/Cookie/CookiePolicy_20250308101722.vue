@@ -14,8 +14,8 @@ import GuestPageLayout from '@/Layouts/GuestPageLayout.vue';
                     </v-col>
                 </v-row>
             </v-container>
-            <div class="w-full md:w-1/2 mx-auto fill-height py-4">
-                <v-container class="fill-height">
+            <div class="w-full md:w-1/2 mx-auto fill-height">
+                <v-container class="fill-height align-center">
                     <v-row>
                         <v-col cols="12">
                             <h5 class="text-h5">Sütik használata az oldalon</h5>

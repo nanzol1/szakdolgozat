@@ -14,7 +14,7 @@ import GuestPageLayout from '@/Layouts/GuestPageLayout.vue';
                     </v-col>
                 </v-row>
             </v-container>
-            <div class="w-full md:w-1/2 mx-auto fill-height py-4">
+            <div class="w-full md:w-1/2 mx-auto fill-height">
                 <v-container class="fill-height">
                     <v-row>
                         <v-col cols="12">
@@ -42,7 +42,6 @@ import GuestPageLayout from '@/Layouts/GuestPageLayout.vue';
     }
     p{
         font-size: 16px;
-        margin-bottom: .5em;
     }
     ul{
         padding-left:1em;

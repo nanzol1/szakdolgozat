@@ -28,4 +28,4 @@
 ### Webalkalmazás elérhetősége
 - A projekt elérhető lesz a http://localhost:8000 címen.
 
-## Ne felejtsük el a .env.example file-t átnevezni, hogy meglegyen a projekthez szükséges .env file!
+### Ne felejtsük el a .env.example file-t átnevezni, hogy meglegyen a projekthez szükséges .env file!

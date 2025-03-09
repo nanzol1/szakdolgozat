@@ -7,7 +7,7 @@
 - Indítsuk el az Apache és MySQL szervereket a XAMPP vezérlőpultján.
 
 ### Composer telepítése
-- A Composer szükséges a projekt függőségeinek kezeléséhez. A Composer legfrissebb verzióját a következő linken töltheted le: https://getcomposer.org/.
+- A Composer szükséges a projekt függőségeinek kezeléséhez. A Composer legfrissebb verzióját a következő linken tölthetjük le: https://getcomposer.org/.
 
 ### Projekt klónozása
 - Klónozzuk a projektet a GitHubról a következő parancs használatával: git clone <repo_url>

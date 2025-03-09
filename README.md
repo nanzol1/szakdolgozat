@@ -1,28 +1,29 @@
-# szakdolgozat
-A projekt telepítéséhez és futtatásához az alábbi lépéseket kell követni:
+# Szakdolgozat 2025
 
-PHP verzió és XAMPP/WAMP szerver telepítése
-    - A legfrissebb PHP verzióra lesz szükség, amit egy XAMPP vagy WAMP szerver biztosít. A XAMPP automatikusan a legfrissebb PHP verzióval telepíti a környezetet.
-    - Indítsuk el az Apache és MySQL szervereket a XAMPP vezérlőpultján.
+## A projekt telepítéséhez és futtatásához az alábbi lépéseket kell követni:
 
-Composer telepítése
-    - A Composer szükséges a projekt függőségeinek kezeléséhez. A Composer legfrissebb verzióját a következő linken töltheted le: https://getcomposer.org/.
+### PHP verzió és XAMPP/WAMP szerver telepítése
+- A legfrissebb PHP verzióra lesz szükség, amit egy XAMPP vagy WAMP szerver biztosít. A XAMPP automatikusan a legfrissebb PHP verzióval telepíti a környezetet.
+- Indítsuk el az Apache és MySQL szervereket a XAMPP vezérlőpultján.
 
-Projekt klónozása
-    - Klónozzuk a projektet a GitHubról a következő parancs használatával: git clone <repo_url>
+### Composer telepítése
+- A Composer szükséges a projekt függőségeinek kezeléséhez. A Composer legfrissebb verzióját a következő linken töltheted le: https://getcomposer.org/.
 
-Függőségek telepítése
-    - A projekt mappájában futtassuk az alábbi parancsokat a szükséges PHP és JavaScript függőségek telepítéséhez:
-        - composer install
-        - npm install
+### Projekt klónozása
+- Klónozzuk a projektet a GitHubról a következő parancs használatával: git clone <repo_url>
 
-Stílusok és JS fájlok generálása
-    - A következő parancsokkal generáljunk le minden szükséges CSS és JavaScript fájlt:
-        - npm run build
+### Függőségek telepítése
+- A projekt mappájában futtassuk az alábbi parancsokat a szükséges PHP és JavaScript függőségek telepítéséhez:
+  - composer install
+  - npm install
 
-Fejlesztői környezet indítása
-    - Miután minden telepítés és generálás sikeresen megtörtént, indítsuk el a fejlesztői szervert a következő parancs futtatásával:
-        - composer run dev
+### Stílusok és JS fájlok generálása
+- A következő parancsokkal generáljunk le minden szükséges CSS és JavaScript fájlt:
+  - npm run build
 
-Webalkalmazás elérhetősége
-    - A projekt elérhető lesz a http://localhost:8000 címen.
+### Fejlesztői környezet indítása
+- Miután minden telepítés és generálás sikeresen megtörtént, indítsuk el a fejlesztői szervert a következő parancs futtatásával:
+  - composer run dev
+
+### Webalkalmazás elérhetősége
+- A projekt elérhető lesz a http://localhost:8000 címen.

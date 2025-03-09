@@ -203,7 +203,7 @@ const computedSlidesPerView = computed(() => {
                                                     <v-icon icon="mdi mdi-cash"></v-icon>{{ payment }}
                                                 </div>
                                             </div>
-                                            <div :class="['flex flex-row w-full sm:w-fit',{'h-full align-center':!user}]" v-if="!$page.props.auth.company">
+                                            <div :class="['flex flex-row w-full sm:w-fit',{'h-full align-center':!user}]">
                                                 <v-btn variant="tonal" @click="sendApplication" :disabled="isApplied" v-if="isJobActive" :class="['mr-3 max-sm:!h-full max-sm:!py-3 !text-stone-50 !bg-[#A67C52] hover:!bg-[#3A2618] hover:scale-105']">
                                                     {{ computeApplied }}
                                                 </v-btn>
@@ -365,9 +365,5 @@ const computedSlidesPerView = computed(() => {
 
 .gradient-bg{
     background: linear-gradient(to bottom, #c7a07abe, #e4c6a281);
-}
-
-.v-img{
-    height: 100% !important;
 }
 </style>

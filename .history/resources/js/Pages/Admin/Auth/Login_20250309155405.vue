@@ -30,27 +30,25 @@ const submit = () =>{
 
 <template>
     <GuestPageLayout>
-        <Head title="Admin - Bejelentkezés" />
+        <Head title="Log in" />
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
-        <div class="align-center flex">
-            <v-form @submit.prevent="submit">
-                <div>
-                    <label for="email">E-mail cím</label>
-                    <input type="email" v-model="form.email" class="block">
-                </div>
-                <div>
-                    <label for="password">Jelszó</label>
-                    <input type="password" v-model="form.password" class="block">
-                </div>
-                <div>
-                    <button type="submit">Bejelentkezés</button>
-                </div>
-            </v-form>
-        </div>
+        <v-form @submit.prevent="submit">
+            <div>
+                <label for="email">E-mail cím</label>
+                <input type="email" v-model="form.email" class="block">
+            </div>
+            <div>
+                <label for="password">Jelszó</label>
+                <input type="password" v-model="form.password" class="block">
+            </div>
+            <div>
+                <button type="submit">Bejelentkezés</button>
+            </div>
+        </form>
 
     </GuestPageLayout>
 </template>

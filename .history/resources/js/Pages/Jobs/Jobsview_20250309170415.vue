@@ -80,6 +80,7 @@ const isJobActive = computed(() => {
 });
 
 const sendApplication = () => {
+    if(usePage().props.auth.company){ return; }
     if(user){
         router.post(route('jobs.apply',{id:props.job.id}),{
         job_id: props.job.id,
@@ -203,7 +204,7 @@ const computedSlidesPerView = computed(() => {
                                                     <v-icon icon="mdi mdi-cash"></v-icon>{{ payment }}
                                                 </div>
                                             </div>
-                                            <div :class="['flex flex-row w-full sm:w-fit',{'h-full align-center':!user}]" v-if="!$page.props.auth.company">
+                                            <div :class="['flex flex-row w-full sm:w-fit',{'h-full align-center':!user}]">
                                                 <v-btn variant="tonal" @click="sendApplication" :disabled="isApplied" v-if="isJobActive" :class="['mr-3 max-sm:!h-full max-sm:!py-3 !text-stone-50 !bg-[#A67C52] hover:!bg-[#3A2618] hover:scale-105']">
                                                     {{ computeApplied }}
                                                 </v-btn>
